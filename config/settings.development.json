@@ -1,7 +1,7 @@
 {
   "defaultAccounts": [
     { "email": "admin@foo.com", "password": "changeme", "role": "ADMIN" },
-    { "email": "john@foo.com", "password": "changeme" }
+    { "email": "john@foo.com", "password": "changeme", "role": "USER" }
   ],
 
   "defaultData": [
@@ -9,5 +9,51 @@
     { "name": "Bicycle", "quantity": 2, "owner": "john@foo.com", "condition": "poor" },
     { "name": "Banana", "quantity": 2, "owner": "admin@foo.com", "condition": "good" },
     { "name": "Boogie Board", "quantity": 2, "owner": "admin@foo.com", "condition": "excellent" }
+  ],
+
+  "defaultLocations": [
+    { "name": "Downtown" },
+    { "name": "Uptown" },
+    { "name": "Midtown" },
+    { "name": "Chinatown" }
+  ],
+
+  "defaultRestaurants": [
+    {
+      "name": "Sushi Paradise",
+      "location": "Downtown",
+      "postedBy": "admin@foo.com",
+      "website": "https://sushiparadise.com",
+      "phone": "808-555-1234",
+      "menuLink": "https://sushiparadise.com/menu",
+      "onlineOrderLink": "https://sushiparadise.com/order"
+    },
+    {
+      "name": "Burger Bliss",
+      "location": "Uptown",
+      "postedBy": "john@foo.com",
+      "website": "https://burgerbliss.com",
+      "phone": "808-555-5678",
+      "menuLink": "https://burgerbliss.com/menu",
+      "onlineOrderLink": "https://burgerbliss.com/order"
+    },
+    {
+      "name": "Taco Town",
+      "location": "Midtown",
+      "postedBy": "admin@foo.com",
+      "website": "https://tacotown.com",
+      "phone": "808-555-8765",
+      "menuLink": "https://tacotown.com/menu",
+      "onlineOrderLink": "https://tacotown.com/order"
+    },
+    {
+      "name": "Dragon Noodles",
+      "location": "Chinatown",
+      "postedBy": "john@foo.com",
+      "website": "https://dragonnoodles.com",
+      "phone": "808-555-4321",
+      "menuLink": "https://dragonnoodles.com/menu",
+      "onlineOrderLink": "https://dragonnoodles.com/order"
+    }
   ]
 }

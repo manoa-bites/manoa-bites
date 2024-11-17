@@ -45,6 +45,42 @@ async function main() {
       },
     });
   });
+  const locationMap = new Map();
+  config.defaultLocations.forEach(async (location) => {
+    const createdLocation = await prisma.location.upsert({
+      where: { name: location.name },
+      update: {},
+      create: {
+        name: location.name,
+      },
+    });
+    locationMap.set(location.name, createdLocation.id);
+  });
+  config.defaultRestaurants.forEach(async (restaurant) => {
+    const user = await prisma.user.findUnique({
+      where: { email: restaurant.postedBy },
+    });
+
+    const location = await prisma.location.findUnique({
+      where: { name: restaurant.location },
+    });
+
+    if (user && location) {
+      await prisma.restaurant.upsert({
+        where: { name: restaurant.name },
+        update: {},
+        create: {
+          name: restaurant.name,
+          locationId: location?.id,
+          postedById: user.id,
+          website: restaurant.website,
+          phone: restaurant.phone,
+          menuLink: restaurant.menuLink,
+          onlineOrderLink: restaurant.onlineOrderLink,
+        },
+      });
+    }
+  });
 }
 main()
   .then(() => prisma.$disconnect())
