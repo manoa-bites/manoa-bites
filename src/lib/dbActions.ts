@@ -1,6 +1,6 @@
 'use server';
 
-import { Stuff, Condition } from '@prisma/client';
+import { Stuff, Condition, Topic } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
@@ -91,4 +91,24 @@ export async function changePassword(credentials: { email: string; password: str
       password,
     },
   });
+}
+
+export async function reportIssue(issue: { topic: string; description: string }) {
+  let topic: Topic = 'other';
+  if (issue.topic === 'bug') {
+    topic = 'bug';
+  } else if (issue.topic === 'feature') {
+    topic = 'feature';
+  } else if (issue.topic === 'wronginformation') {
+    topic = 'wronginformation';
+  } else {
+    topic = 'other';
+  }
+  await prisma.issue.create({
+    data: {
+      topic,
+      description: issue.description,
+    },
+  });
+  redirect('/list');
 }

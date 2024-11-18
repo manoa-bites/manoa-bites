@@ -62,3 +62,18 @@ model Restaurant {
   onlineOrderLink String?
   favoritedBy     User[]   @relation("Favorites")
 }
+
+enum Topic {
+  bug
+  feature
+  wronginformation
+  other
+}
+
+model Issue {
+  id              Int     @id @default(autoincrement())
+  topic       Topic
+  description String
+
+}
+
