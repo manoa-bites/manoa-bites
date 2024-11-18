@@ -12,6 +12,9 @@ async function main() {
     if (account.role === 'ADMIN') {
       role = 'ADMIN';
     }
+    if (account.role === 'VENDOR') {
+      role = 'VENDOR';
+    }
     console.log(`  Creating user: ${account.email} with role: ${role}`);
     await prisma.user.upsert({
       where: { email: account.email },
@@ -58,11 +61,11 @@ async function main() {
   });
   config.defaultRestaurants.forEach(async (restaurant) => {
     const user = await prisma.user.findUnique({
-      where: { email: restaurant.postedBy },
+      where: { id: restaurant.postedById },
     });
 
     const location = await prisma.location.findUnique({
-      where: { name: restaurant.location },
+      where: { id: restaurant.locationId },
     });
 
     if (user && location) {
@@ -70,6 +73,7 @@ async function main() {
         where: { name: restaurant.name },
         update: {},
         create: {
+          id: restaurant.id,
           name: restaurant.name,
           locationId: location?.id,
           postedById: user.id,
@@ -80,6 +84,28 @@ async function main() {
         },
       });
     }
+  });
+
+  config.defaultFavorites.forEach(async (favorite) => {
+    // Find the restaurant based on its ID
+    const restaurant = await prisma.restaurant.findUnique({
+      where: { id: favorite.restaurantId },
+    });
+
+    if (!restaurant) {
+      console.error(`Restaurant with id ${favorite.restaurantId} not found.`);
+      return;
+    }
+
+    // Update the user's favorites to include this restaurant
+    await prisma.user.update({
+      where: { id: favorite.userId },
+      data: {
+        favorites: {
+          connect: { id: favorite.restaurantId },
+        },
+      },
+    });
   });
 }
 main()
