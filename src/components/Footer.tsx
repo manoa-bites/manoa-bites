@@ -8,7 +8,7 @@ const Footer = () => (
         <h3>Resource Links:</h3>
         <p>FAQ</p>
         <p>About Us</p>
-        <p>Report a problem</p>
+        <p><a href="/issueform">Report a problem</a></p>
         <p><a href="https://github.com/manoa-bites">Link to our source code</a></p>
       </Col>
     </Container>
