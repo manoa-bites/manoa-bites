@@ -28,7 +28,6 @@ model User {
   email      String       @unique
   password   String
   role       Role         @default(USER)
-  favorites   Restaurant[] @relation("Favorites")
 }
 
 enum Condition {
@@ -46,21 +45,26 @@ model Stuff {
   owner     String
 }
 
-model Location { 
-  id    Int     @id @default(autoincrement())
-  name  String  @unique
+model Location {
+  id   Int    @id @default(autoincrement())
+  name String @unique
 }
 
 model Restaurant {
-  id              Int     @id @default(autoincrement())
-  postedById      Int     
-  locationId      Int     
-  name            String   @unique
+  id              Int         @id @default(autoincrement())
+  postedById      Int
+  locationId      Int
+  name            String      @unique
   website         String?
   phone           String?
   menuLink        String?
   onlineOrderLink String?
-  favoritedBy     User[]   @relation("Favorites")
+}
+
+model FavoriteRestaurant {
+  id              Int     @id @default(autoincrement())
+  userFavoritedId Int
+  restaurantFavoritedId Int
 }
 
 enum Topic {
@@ -71,9 +75,7 @@ enum Topic {
 }
 
 model Issue {
-  id              Int     @id @default(autoincrement())
+  id          Int    @id @default(autoincrement())
   topic       Topic
   description String
-
 }
-

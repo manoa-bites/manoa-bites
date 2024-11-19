@@ -1,14 +1,35 @@
 {
   "defaultAccounts": [
     { "email": "admin@foo.com", "password": "changeme", "role": "ADMIN" },
-    { "email": "john@foo.com", "password": "changeme", "role": "USER" }
+    { "email": "john@foo.com", "password": "changeme", "role": "USER" },
+    { "email": "lmig4@hawaii.edu", "password": "changeme", "role": "VENDOR" }
   ],
 
   "defaultData": [
-    { "name": "Basket", "quantity": 3, "owner": "john@foo.com", "condition": "excellent" },
-    { "name": "Bicycle", "quantity": 2, "owner": "john@foo.com", "condition": "poor" },
-    { "name": "Banana", "quantity": 2, "owner": "admin@foo.com", "condition": "good" },
-    { "name": "Boogie Board", "quantity": 2, "owner": "admin@foo.com", "condition": "excellent" }
+    {
+      "name": "Basket",
+      "quantity": 3,
+      "owner": "john@foo.com",
+      "condition": "excellent"
+    },
+    {
+      "name": "Bicycle",
+      "quantity": 2,
+      "owner": "john@foo.com",
+      "condition": "poor"
+    },
+    {
+      "name": "Banana",
+      "quantity": 2,
+      "owner": "admin@foo.com",
+      "condition": "good"
+    },
+    {
+      "name": "Boogie Board",
+      "quantity": 2,
+      "owner": "admin@foo.com",
+      "condition": "excellent"
+    }
   ],
 
   "defaultLocations": [
@@ -21,8 +42,8 @@
   "defaultRestaurants": [
     {
       "name": "Sushi Paradise",
-      "location": "Downtown",
-      "postedBy": "admin@foo.com",
+      "locationId": 1,
+      "postedById": 1,
       "website": "https://sushiparadise.com",
       "phone": "808-555-1234",
       "menuLink": "https://sushiparadise.com/menu",
@@ -30,8 +51,8 @@
     },
     {
       "name": "Burger Bliss",
-      "location": "Uptown",
-      "postedBy": "john@foo.com",
+      "locationId": 2,
+      "postedById": 2,
       "website": "https://burgerbliss.com",
       "phone": "808-555-5678",
       "menuLink": "https://burgerbliss.com/menu",
@@ -39,8 +60,8 @@
     },
     {
       "name": "Taco Town",
-      "location": "Midtown",
-      "postedBy": "admin@foo.com",
+      "locationId": 3,
+      "postedById": 1,
       "website": "https://tacotown.com",
       "phone": "808-555-8765",
       "menuLink": "https://tacotown.com/menu",
@@ -48,12 +69,19 @@
     },
     {
       "name": "Dragon Noodles",
-      "location": "Chinatown",
-      "postedBy": "john@foo.com",
+      "locationId": 4,
+      "postedById": 2,
       "website": "https://dragonnoodles.com",
       "phone": "808-555-4321",
       "menuLink": "https://dragonnoodles.com/menu",
       "onlineOrderLink": "https://dragonnoodles.com/order"
     }
+  ],
+
+  "defaultFavorites": [
+    { "userId": 1, "restaurantId": 1 },
+    { "userId": 1, "restaurantId": 3 },
+    { "userId": 2, "restaurantId": 2 },
+    { "userId": 2, "restaurantId": 4 }
   ]
 }
