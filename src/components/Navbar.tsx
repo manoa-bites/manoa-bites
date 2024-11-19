@@ -57,7 +57,7 @@ const NavBar: React.FC = () => {
                     id="list-stuff-nav"
                     href="/map"
                     key="list"
-                    active={pathName === '/list'}
+                    active={pathName === '/map'}
                   >
                     Map
                   </Nav.Link>,
