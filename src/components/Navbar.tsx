@@ -61,6 +61,14 @@ const NavBar: React.FC = () => {
                   >
                     Map
                   </Nav.Link>,
+                  <Nav.Link
+                    id="list-stuff-nav"
+                    href="/favorites"
+                    key="list"
+                    active={pathName === '/favorites'}
+                  >
+                  Map
+                  </Nav.Link>,
                 ]
               : ''}
             {currentUser && role === 'ADMIN' ? (
