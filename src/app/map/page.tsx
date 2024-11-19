@@ -3,7 +3,7 @@ import { Container } from 'react-bootstrap';
 
 const MapPage = () => (
   <Container>
-    <h1 className="justify-content-center">Need Directions?</h1>
+    <h1 className="text-center">Need Directions?</h1>
     <App />
   </Container>
 );
