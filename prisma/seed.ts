@@ -84,25 +84,6 @@ async function main() {
   });
 
   config.defaultFavorites.forEach(async (favorite) => {
-    const restaurant = await prisma.restaurant.findUnique({
-      where: { id: favorite.restaurantId },
-    });
-
-    const user = await prisma.user.findUnique({
-      where: { id: favorite.userId },
-    });
-
-    if (!restaurant) {
-      console.error(`Restaurant with id ${favorite.restaurantId} not found.`);
-      return;
-    }
-
-    if (!user) {
-      console.error(`User with id ${favorite.userId} not found.`);
-      return;
-    }
-
-    // Update the user's favorites to include this restaurant
     await prisma.favoriteRestaurant.create({
       data: {
         userFavoritedId: favorite.userId,
