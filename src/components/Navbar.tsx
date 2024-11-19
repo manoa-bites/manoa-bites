@@ -67,7 +67,7 @@ const NavBar: React.FC = () => {
                     key="list"
                     active={pathName === '/favorites'}
                   >
-                  Map
+                  Favorites
                   </Nav.Link>,
                 ]
               : ''}
