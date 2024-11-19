@@ -1,5 +1,5 @@
 import { Restaurant } from '@prisma/client';
-import { Card, ListGroup, Button } from 'react-bootstrap';
+import { Card, ListGroup, Button } from 'react-bootstrap/';
 import { Heart } from 'react-bootstrap-icons';
 
 const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => (
