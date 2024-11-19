@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
 import { Restaurant } from '@prisma/client';
+import RestaurantCard from '@/components/RestaurantCard';
 // import { Restaurant } from '@prisma/client';
 
 /** Render a list of stuff for the logged in user. */
@@ -46,20 +47,10 @@ const FavoritesPage = async () => {
       <Container id="list" fluid className="py-3">
         <Row>
           <Col>
-            {/* <h1>Stuff</h1>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Quantity</th>
-                  <th>Condition</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-            </Table> */}
             {restaurants.map((restaurant) => (
-              // CALL RESTAURANTCARD COMPONENT
-              <div>{restaurant.name}</div>
+              <Col key={restaurant.name}>
+                <RestaurantCard restaurant={restaurant} />
+              </Col>
             ))}
           </Col>
         </Row>
