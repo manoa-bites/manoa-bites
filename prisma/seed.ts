@@ -48,16 +48,14 @@ async function main() {
       },
     });
   });
-  const locationMap = new Map();
   config.defaultLocations.forEach(async (location) => {
-    const createdLocation = await prisma.location.upsert({
+    await prisma.location.upsert({
       where: { name: location.name },
       update: {},
       create: {
         name: location.name,
       },
     });
-    locationMap.set(location.name, createdLocation.id);
   });
   config.defaultRestaurants.forEach(async (restaurant) => {
     const user = await prisma.user.findUnique({
@@ -74,7 +72,7 @@ async function main() {
         update: {},
         create: {
           name: restaurant.name,
-          locationId: location?.id,
+          locationId: location.id,
           postedById: user.id,
           website: restaurant.website,
           phone: restaurant.phone,
