@@ -45,16 +45,16 @@ model Stuff {
   owner     String
 }
 
-model Location { 
-  id    Int     @id @default(autoincrement())
-  name  String  @unique
+model Location {
+  id   Int    @id @default(autoincrement())
+  name String @unique
 }
 
 model Restaurant {
-  id              Int     @id @default(autoincrement())
-  postedById      Int     
-  locationId      Int     
-  name            String   @unique
+  id              Int         @id @default(autoincrement())
+  postedById      Int
+  locationId      Int
+  name            String      @unique
   website         String?
   phone           String?
   menuLink        String?
@@ -75,8 +75,16 @@ enum Topic {
 }
 
 model Issue {
-  id              Int     @id @default(autoincrement())
+  id          Int    @id @default(autoincrement())
   topic       Topic
   description String
 }
 
+model Favorites {
+  id           Int        @id @default(autoincrement())
+  userId       Int
+  restaurantId Int
+  // Relationships
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  user         User       @relation(fields: [userId], references: [id])
+}

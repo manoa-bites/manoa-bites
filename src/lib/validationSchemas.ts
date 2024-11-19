@@ -19,3 +19,15 @@ export const IssueSchema = Yup.object({
   topic: Yup.string().oneOf(['bug', 'feature', 'wronginformation', 'other']).required(),
   description: Yup.string().required(),
 });
+
+export interface Restaurant {
+  id: number;
+  locationId: number;
+  postedById: number;
+  name: string;
+  website: string;
+  phone: string;
+  menuLink: string;
+  onlineOrderLink: string;
+  favoritedBy: string;
+}
