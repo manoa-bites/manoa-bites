@@ -1,5 +1,5 @@
 import { getServerSession } from 'next-auth';
-import { Col, Container, Row, Table } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import { prisma } from '@/lib/prisma';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
@@ -23,11 +23,15 @@ const FavoritesPage = async () => {
     const favorites = await prisma.favoriteRestaurant.findMany({
       where: { userFavoritedId: user?.id },
     });
-    const restaurantPromises = favorites.map((favorite) =>
-      prisma.restaurant.findUnique({
-        where: { id: favorite.restaurantFavoritedId },
-      }),
-    );
+    const restaurantPromises: Promise<Restaurant | null>[] = [];
+
+    favorites.forEach((favorite) => {
+      restaurantPromises.push(
+        prisma.restaurant.findUnique({
+          where: { id: favorite.restaurantFavoritedId },
+        }),
+      );
+    });
 
     const restaurants = (await Promise.all(restaurantPromises)).filter(
       Boolean,
@@ -42,7 +46,7 @@ const FavoritesPage = async () => {
       <Container id="list" fluid className="py-3">
         <Row>
           <Col>
-            <h1>Stuff</h1>
+            {/* <h1>Stuff</h1>
             <Table striped bordered hover>
               <thead>
                 <tr>
@@ -52,13 +56,11 @@ const FavoritesPage = async () => {
                   <th>Actions</th>
                 </tr>
               </thead>
-              <tbody>
-                {restaurants.map((restaurant) => (
-                  // CALL RESTAURANTCARD COMPONENT HERE
-                  <div>{restaurant.name}</div>
-                ))}
-              </tbody>
-            </Table>
+            </Table> */}
+            {restaurants.map((restaurant) => (
+              // CALL RESTAURANTCARD COMPONENT
+              <div>{restaurant.name}</div>
+            ))}
           </Col>
         </Row>
       </Container>
