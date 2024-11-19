@@ -79,12 +79,3 @@ model Issue {
   topic       Topic
   description String
 }
-
-model Favorites {
-  id           Int        @id @default(autoincrement())
-  userId       Int
-  restaurantId Int
-  // Relationships
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
-  user         User       @relation(fields: [userId], references: [id])
-}
