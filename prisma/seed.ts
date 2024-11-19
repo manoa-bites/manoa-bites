@@ -73,7 +73,6 @@ async function main() {
         where: { name: restaurant.name },
         update: {},
         create: {
-          id: restaurant.id,
           name: restaurant.name,
           locationId: location?.id,
           postedById: user.id,
@@ -87,9 +86,12 @@ async function main() {
   });
 
   config.defaultFavorites.forEach(async (favorite) => {
-    // Find the restaurant based on its ID
     const restaurant = await prisma.restaurant.findUnique({
       where: { id: favorite.restaurantId },
+    });
+
+    const user = await prisma.user.findUnique({
+      where: { id: favorite.userId },
     });
 
     if (!restaurant) {
@@ -97,13 +99,16 @@ async function main() {
       return;
     }
 
+    if (!user) {
+      console.error(`User with id ${favorite.userId} not found.`);
+      return;
+    }
+
     // Update the user's favorites to include this restaurant
-    await prisma.user.update({
-      where: { id: favorite.userId },
+    await prisma.favoriteRestaurant.create({
       data: {
-        favorites: {
-          connect: { id: favorite.restaurantId },
-        },
+        userFavoritedId: favorite.userId,
+        restaurantFavoritedId: favorite.restaurantId,
       },
     });
   });
