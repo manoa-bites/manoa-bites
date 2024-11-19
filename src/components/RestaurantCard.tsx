@@ -10,7 +10,7 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => (
         {restaurant.name}
       </Card.Title>
       <Card.Subtitle>
-        <Link href={restaurant.website} target="_blank" rel="noopener noreferrer">
+        <Link href={restaurant.website || '#'} target="_blank" rel="noopener noreferrer">
           {restaurant.website}
         </Link>
       </Card.Subtitle>
@@ -19,13 +19,13 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => (
       <ListGroup variant="flush">
         <ListGroup.Item>
           Phone:
-          {restaurant.phone}
+          {restaurant.phone || 'Not Available'}
         </ListGroup.Item>
         <ListGroup.Item>
-          <Link href={restaurant.menuLink} target="_blank" rel="noopener noreferrer">Menu</Link>
+          <Link href={restaurant.menuLink || 'Menu Not Available'} target="_blank" rel="noopener noreferrer">Menu</Link>
         </ListGroup.Item>
         <ListGroup.Item>
-          <Link href={restaurant.onlineOrderLink} target="_blank" rel="noopener noreferrer">Order Online</Link>
+          <Link href={restaurant.onlineOrderLink || '#'} target="_blank" rel="noopener noreferrer">Order Online</Link>
         </ListGroup.Item>
       </ListGroup>
     </Card.Body>
