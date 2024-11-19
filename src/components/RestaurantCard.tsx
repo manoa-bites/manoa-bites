@@ -1,31 +1,37 @@
-import { Restaurant } from '@prisma/client';
-import { Card, ListGroup, Button } from 'react-bootstrap';
+import { Restaurant } from '@/lib/validationSchemas';
+import { Card, ListGroup, Button } from 'react-bootstrap/';
+import { Heart } from 'react-bootstrap-icons';
+import Link from 'next/link';
 
 const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => (
-  <Card className="h-100">
+  <Card className="h-100 mb-3">
     <Card.Header>
       <Card.Title>
         {restaurant.name}
       </Card.Title>
-      <Card.Subtitle>{restaurant.website}</Card.Subtitle>
+      <Card.Subtitle>
+        <Link href={restaurant.website || '#'} target="_blank" rel="noopener noreferrer">
+          {restaurant.website}
+        </Link>
+      </Card.Subtitle>
     </Card.Header>
     <Card.Body>
       <ListGroup variant="flush">
         <ListGroup.Item>
           Phone:
-          {restaurant.phone}
+          {restaurant.phone || 'Not Available'}
         </ListGroup.Item>
         <ListGroup.Item>
-          <a href="restaurant.menuLink" target="_blank" rel="noopener noreferrer">Menu</a>
+          <Link href={restaurant.menuLink || 'Menu Not Available'} target="_blank" rel="noopener noreferrer">Menu</Link>
         </ListGroup.Item>
         <ListGroup.Item>
-          <a href="restaurant.onlineOrderLink" target="_blank" rel="noopener noreferrer">Order Online</a>
+          <Link href={restaurant.onlineOrderLink || '#'} target="_blank" rel="noopener noreferrer">Order Online</Link>
         </ListGroup.Item>
       </ListGroup>
     </Card.Body>
     <Card.Footer>
       <Button variant="secondary">
-        <i className="bi bi-suit-heart" />
+        <Heart />
       </Button>
     </Card.Footer>
   </Card>

@@ -25,9 +25,8 @@ export interface Restaurant {
   locationId: number;
   postedById: number;
   name: string;
-  website: string;
-  phone: string;
-  menuLink: string;
-  onlineOrderLink: string;
-  favoritedBy: string;
+  website: string | null;
+  phone: string | null;
+  menuLink: string | null;
+  onlineOrderLink: string | null;
 }
