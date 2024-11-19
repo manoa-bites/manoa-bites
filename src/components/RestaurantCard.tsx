@@ -1,5 +1,6 @@
 import { Restaurant } from '@prisma/client';
 import { Card, ListGroup, Button } from 'react-bootstrap';
+import { Heart } from 'react-bootstrap-icons';
 
 const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => (
   <Card className="h-100">
@@ -25,7 +26,7 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => (
     </Card.Body>
     <Card.Footer>
       <Button variant="secondary">
-        <i className="bi bi-suit-heart" />
+        <Heart />
       </Button>
     </Card.Footer>
   </Card>
