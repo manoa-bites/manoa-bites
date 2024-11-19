@@ -45,6 +45,7 @@ const FavoritesPage = async () => {
   return (
     <main>
       <Container id="list" fluid className="py-3">
+        <h1 className="text-center">Your Favorite Restaurants</h1>
         <Row>
           <Col>
             {restaurants.map((restaurant) => (
