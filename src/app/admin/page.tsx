@@ -1,27 +1,48 @@
 import { getServerSession } from 'next-auth';
 import { Col, Container, Row, Table } from 'react-bootstrap';
-import StuffItemAdmin from '@/components/StuffItemAdmin';
 import { prisma } from '@/lib/prisma';
 import { adminVendorProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
+import { Restaurant } from '@prisma/client';
+import RestaurantItemAdmin from '@/components/RestaurantItemAdmin';
 
 const AdminPage = async () => {
   const session = await getServerSession(authOptions);
   // const { data: session } = useSession();
-  const currentUser = session?.user?.email;
+  const currentUserEmail = session?.user?.email as string;
+  const currentUser = await prisma.user.findUnique({
+    where: {
+      email: currentUserEmail,
+    },
+  });
+  const currentUserId = currentUser?.id;
   const userWithRole = session?.user as { email: string; randomKey: string };
   const role = userWithRole?.randomKey;
-
-  console.log(currentUser);
-  console.log(role);
 
   adminVendorProtectedPage(
     session as {
       user: { email: string; id: string; randomKey: string };
     } | null,
   );
-  const stuff = await prisma.stuff.findMany({});
+
   const users = await prisma.user.findMany({});
+
+  const getRestaurants = async (): Promise<Restaurant[]> => {
+    let ret: Restaurant[] = [];
+    if (role === 'ADMIN') {
+      ret = await prisma.restaurant.findMany({});
+    }
+    if (role === 'VENDOR' && currentUserId) {
+      ret = await prisma.restaurant.findMany({
+        where: {
+          postedById: currentUserId,
+        },
+      });
+    }
+    return ret;
+  };
+
+  const restaurants: Restaurant[] = await getRestaurants();
 
   return (
     <main>
@@ -33,21 +54,36 @@ const AdminPage = async () => {
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Quantity</th>
-                  <th>Condition</th>
-                  <th>Owner</th>
+                  <th>Location</th>
+                  <th>Posted By</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {stuff.map((item) => (
-                  <StuffItemAdmin key={item.id} {...item} />
-                ))}
+                {restaurants.map(async (restaurant) => {
+                  const locationRecord = await prisma.location.findUnique({
+                    where: {
+                      id: restaurant.locationId,
+                    },
+                  });
+
+                  const location = locationRecord?.name || 'Unknown Location';
+
+                  return (
+                    <RestaurantItemAdmin
+                      key={restaurant.id}
+                      name={restaurant.name}
+                      location={location}
+                      id={restaurant.id}
+                      postedby={currentUserEmail}
+                    />
+                  );
+                })}
               </tbody>
             </Table>
           </Col>
         </Row>
-        {currentUser && role === 'ADMIN' ? (
+        {currentUserEmail && role === 'ADMIN' ? (
           <div>
             <Row>
               <Col>
