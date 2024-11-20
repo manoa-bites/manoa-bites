@@ -6,7 +6,7 @@ import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 function Map() {
   const center = useMemo(() => ({ lat: 21.29980545928421, lng: -157.81515541975028 }), []);
   return (
-    <GoogleMap zoom={10} center={center} mapContainerClassName="map-container">
+    <GoogleMap zoom={20} center={center} mapContainerClassName="map-container">
       <Marker position={center} />
     </GoogleMap>
   );
