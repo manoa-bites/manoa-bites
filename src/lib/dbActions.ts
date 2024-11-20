@@ -1,6 +1,6 @@
 'use server';
 
-import { Stuff, Condition, Topic } from '@prisma/client';
+import { Stuff, Condition, Topic, Role } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
@@ -67,13 +67,17 @@ export async function deleteStuff(id: number) {
  * Creates a new user in the database.
  * @param credentials, an object with the following properties: email, password.
  */
-export async function createUser(credentials: { email: string; password: string }) {
-  // console.log(`createUser data: ${JSON.stringify(credentials, null, 2)}`);
-  const password = await hash(credentials.password, 10);
+export async function createUser(credentials: { email: string; password: string; role?: Role }) {
+  const { email, password, role } = credentials;
+
+  const hashedPassword = await hash(password, 10);
+
+  // Save user with the role (using the Role enum)
   await prisma.user.create({
     data: {
-      email: credentials.email,
-      password,
+      email,
+      password: hashedPassword,
+      role: role || Role.USER, // Default to Role.USER if no role is provided
     },
   });
 }

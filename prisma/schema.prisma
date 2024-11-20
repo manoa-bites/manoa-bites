@@ -79,3 +79,9 @@ model Issue {
   topic       Topic
   description String
 }
+
+enum Role {
+  USER
+  VENDOR
+  ADMIN
+}
