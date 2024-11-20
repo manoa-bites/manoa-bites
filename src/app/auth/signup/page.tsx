@@ -11,6 +11,7 @@ type SignUpForm = {
   email: string;
   password: string;
   confirmPassword: string;
+  signupKey?: string;
   // acceptTerms: boolean;
 };
 
@@ -79,6 +80,16 @@ const SignUp = () => {
                       className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}
                     />
                     <div className="invalid-feedback">{errors.confirmPassword?.message}</div>
+                  </Form.Group>
+
+                  <Form.Group className="form-group">
+                    <Form.Label>Signup Key (Optional)</Form.Label>
+                    <input
+                      type="text"
+                      {...register('signupKey')}
+                      className={`form-control ${errors.signupKey ? 'is-invalid' : ''}`}
+                    />
+                    <div className="invalid-feedback">{errors.signupKey?.message}</div>
                   </Form.Group>
                   <Form.Group className="form-group py-3">
                     <Row>
