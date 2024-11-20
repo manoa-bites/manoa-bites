@@ -5,10 +5,62 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
+
+}
+
+.rainbow-text{
+  font-family: Arial, sans-serif;
+  color: darkorange;
+}
+
+.p-2 {
+  font-family: Arial, sans-serif;
+  color: rgb(22, 119, 43);
 }
 .wrapper {
   box-sizing: border-box;
   min-height: 100%;
   display: flex;
   flex-direction: column;
+}
+
+.footer {
+  background-color: #024332;
+  color: white;
+}
+
+.footer a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: #d4d4d4;
+}
+
+
+.navbar-green {
+  background-color: #024332 !important;
+  color: white;
+}
+
+.navbar-green .nav-link {
+  color: white !important; /* Ensures the text stays white */
+}
+
+.navbar-green .nav-link:hover {
+  color: #e0e0e0; /* Optional: A lighter shade on hover */
+}
+
+.navbar-green .dropdown-menu {
+  background-color: #024332; /* Match the navbar color if desired */
+}
+
+.navbar-green .dropdown-item {
+  color: white !important; /* Makes text white */
+}
+
+.navbar-green .dropdown-item:hover {
+  color: #e0e0e0; /* Optional: A lighter shade on hover */
+  background-color: #003900; /* Optional: Slightly darker green for hover effect */
 }
