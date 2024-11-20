@@ -43,10 +43,14 @@ const SignUp = () => {
     // Default to 'USER' role (using Role enum)
     let role: Role = Role.USER;
 
+    // Get the values of the Signup Keys from environment variables
+    const adminKey = process.env.NEXT_PUBLIC_SIGNUP_KEY_ADMIN;
+    const vendorKey = process.env.NEXT_PUBLIC_SIGNUP_KEY_VENDOR;
+
     // Check for the Signup Key and assign the correct role
-    if (data.signupKey === 'man-bites-admin') {
+    if (data.signupKey === adminKey) {
       role = Role.ADMIN; // Assign admin role
-    } else if (data.signupKey === 'man-bites-vendor') {
+    } else if (data.signupKey === vendorKey) {
       role = Role.VENDOR; // Assign vendor role
     }
 
