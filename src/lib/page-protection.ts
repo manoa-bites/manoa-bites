@@ -4,7 +4,9 @@ import { Role } from '@prisma/client';
 /**
  * Redirects to the login page if the user is not logged in.
  */
-export const loggedInProtectedPage = (session: { user: { email: string; id: string; randomKey: string } } | null) => {
+export const loggedInProtectedPage = (
+  session: { user: { email: string; id: string; randomKey: string } } | null,
+) => {
   if (!session) {
     redirect('/auth/signin');
   }
@@ -14,9 +16,29 @@ export const loggedInProtectedPage = (session: { user: { email: string; id: stri
  * Redirects to the login page if the user is not logged in.
  * Redirects to the not-authorized page if the user is not an admin.
  */
-export const adminProtectedPage = (session: { user: { email: string; id: string; randomKey: string } } | null) => {
+export const adminProtectedPage = (
+  session: { user: { email: string; id: string; randomKey: string } } | null,
+) => {
   loggedInProtectedPage(session);
   if (session && session.user.randomKey !== Role.ADMIN) {
+    redirect('/not-authorized');
+  }
+};
+
+/**
+ * Redirects to the login page if the user is not logged in.
+ * Redirects to the not-authorized page if the user is not an admin or vendor.
+ */
+export const adminVendorProtectedPage = (
+  session: { user: { email: string; id: string; randomKey: string } } | null,
+) => {
+  loggedInProtectedPage(session);
+
+  if (
+    session && !(
+      session.user.randomKey === Role.ADMIN || session.user.randomKey === Role.VENDOR
+    )
+  ) {
     redirect('/not-authorized');
   }
 };

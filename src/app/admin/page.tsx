@@ -2,12 +2,20 @@ import { getServerSession } from 'next-auth';
 import { Col, Container, Row, Table } from 'react-bootstrap';
 import StuffItemAdmin from '@/components/StuffItemAdmin';
 import { prisma } from '@/lib/prisma';
-import { adminProtectedPage } from '@/lib/page-protection';
+import { adminVendorProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
 
 const AdminPage = async () => {
   const session = await getServerSession(authOptions);
-  adminProtectedPage(
+  // const { data: session } = useSession();
+  const currentUser = session?.user?.email;
+  const userWithRole = session?.user as { email: string; randomKey: string };
+  const role = userWithRole?.randomKey;
+
+  console.log(currentUser);
+  console.log(role);
+
+  adminVendorProtectedPage(
     session as {
       user: { email: string; id: string; randomKey: string };
     } | null,
