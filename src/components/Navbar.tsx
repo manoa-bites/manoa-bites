@@ -23,17 +23,42 @@ const NavBar: React.FC = () => {
           {/* Logo Image */}
           <Image src="/manoabiteslogo.jpg" alt="Manoa Bites" style={{ height: '40px' }} />
           {/* Heading Text */}
+<<<<<<< Updated upstream
           <span style={{ fontSize: '24px', marginLeft: '10px' }}>Manoa Bites</span>
+=======
+          <span
+            style={{ fontSize: '24px', marginLeft: '10px', color: 'white' }}
+          >
+            Manoa Bites
+          </span>
+          <Nav.Link
+            id="add-stuff-nav"
+            href="/list"
+            key="add"
+            active={pathName === '/add'}
+          >
+                    Directory
+          </Nav.Link>
+>>>>>>> Stashed changes
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto justify-content-start">
             {currentUser
               ? [
+<<<<<<< Updated upstream
                   <Nav.Link id="add-stuff-nav" href="/list" key="add" active={pathName === '/add'}>
                     Directory
                   </Nav.Link>,
                   <Nav.Link id="list-stuff-nav" href="/map" key="list" active={pathName === '/list'}>
+=======
+                  <Nav.Link
+                    id="list-stuff-nav"
+                    href="/map"
+                    key="list"
+                    active={pathName === '/map'}
+                  >
+>>>>>>> Stashed changes
                     Map
                   </Nav.Link>,
                 ]
