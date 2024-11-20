@@ -17,7 +17,7 @@ const Footer = () => (
         <Col md={4} className="text-md-start">
           <h3>Links:</h3>
           <ul className="list-unstyled">
-            <li><a href="/about" className="text-white">FAQ</a></li>
+            <li><a href="/faq" className="text-white">FAQ</a></li>
             <li><a href="/issueform" className="text-white">Report a Problem</a></li>
             <li>
               <a href="https://github.com/manoa-bites/manoa-bites" className="text-white">
