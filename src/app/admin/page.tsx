@@ -47,27 +47,31 @@ const AdminPage = async () => {
             </Table>
           </Col>
         </Row>
-        <Row>
-          <Col>
-            <h1>List Users Admin</h1>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Email</th>
-                  <th>Role</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((user) => (
-                  <tr key={user.id}>
-                    <td>{user.email}</td>
-                    <td>{user.role}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </Col>
-        </Row>
+        {currentUser && role === 'ADMIN' ? (
+          <div>
+            <Row>
+              <Col>
+                <h1>List Users Admin</h1>
+                <Table striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th>Email</th>
+                      <th>Role</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {users.map((user) => (
+                      <tr key={user.id}>
+                        <td>{user.email}</td>
+                        <td>{user.role}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </Col>
+            </Row>
+          </div>
+        ) : null}
       </Container>
     </main>
   );
