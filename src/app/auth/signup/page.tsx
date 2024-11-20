@@ -6,11 +6,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
 import { createUser } from '@/lib/dbActions';
+import { Role } from '@prisma/client'; // Import the Role enum from Prisma
 
 type SignUpForm = {
   email: string;
   password: string;
   confirmPassword: string;
+  signupKey?: string;
+  role?: Role;
   // acceptTerms: boolean;
 };
 
@@ -37,9 +40,24 @@ const SignUp = () => {
   });
 
   const onSubmit = async (data: SignUpForm) => {
-    // console.log(JSON.stringify(data, null, 2));
-    await createUser(data);
-    // After creating, signIn with redirect to the add page
+    // Default to 'USER' role (using Role enum)
+    let role: Role = Role.USER;
+
+    // Get the values of the Signup Keys from environment variables
+    const adminKey = process.env.NEXT_PUBLIC_SIGNUP_KEY_ADMIN;
+    const vendorKey = process.env.NEXT_PUBLIC_SIGNUP_KEY_VENDOR;
+
+    // Check for the Signup Key and assign the correct role
+    if (data.signupKey === adminKey) {
+      role = Role.ADMIN; // Assign admin role
+    } else if (data.signupKey === vendorKey) {
+      role = Role.VENDOR; // Assign vendor role
+    }
+
+    // Pass the role to the user creation logic
+    await createUser({ ...data, role });
+
+    // After creating, sign in with redirect to the add page
     await signIn('credentials', { callbackUrl: '/add', ...data });
   };
 
@@ -79,6 +97,16 @@ const SignUp = () => {
                       className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}
                     />
                     <div className="invalid-feedback">{errors.confirmPassword?.message}</div>
+                  </Form.Group>
+
+                  <Form.Group className="form-group">
+                    <Form.Label>Signup Key (Optional)</Form.Label>
+                    <input
+                      type="text"
+                      {...register('signupKey')}
+                      className={`form-control ${errors.signupKey ? 'is-invalid' : ''}`}
+                    />
+                    <div className="invalid-feedback">{errors.signupKey?.message}</div>
                   </Form.Group>
                   <Form.Group className="form-group py-3">
                     <Row>
