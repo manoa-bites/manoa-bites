@@ -105,6 +105,7 @@ const NavBar: React.FC = () => {
                   href="/auth/signin"
                 >
                   <PersonFill />
+                  {' '}
                   Sign in
                 </NavDropdown.Item>
                 <NavDropdown.Item
@@ -112,6 +113,7 @@ const NavBar: React.FC = () => {
                   href="/auth/signup"
                 >
                   <PersonPlusFill />
+                  {' '}
                   Sign up
                 </NavDropdown.Item>
               </NavDropdown>
