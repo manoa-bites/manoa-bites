@@ -2,41 +2,18 @@
   "defaultAccounts": [
     { "email": "admin@foo.com", "password": "changeme", "role": "ADMIN" },
     { "email": "john@foo.com", "password": "changeme", "role": "USER" },
-    { "email": "lmig4@hawaii.edu", "password": "changeme", "role": "VENDOR" }
-  ],
-
-  "defaultData": [
-    {
-      "name": "Basket",
-      "quantity": 3,
-      "owner": "john@foo.com",
-      "condition": "excellent"
-    },
-    {
-      "name": "Bicycle",
-      "quantity": 2,
-      "owner": "john@foo.com",
-      "condition": "poor"
-    },
-    {
-      "name": "Banana",
-      "quantity": 2,
-      "owner": "admin@foo.com",
-      "condition": "good"
-    },
-    {
-      "name": "Boogie Board",
-      "quantity": 2,
-      "owner": "admin@foo.com",
-      "condition": "excellent"
-    }
+    { "email": "lmig4@hawaii.edu", "password": "changeme", "role": "VENDOR" },
+    { "email": "jane@foo.com", "password": "password123", "role": "USER" },
+    { "email": "vendor@foo.com", "password": "vendorpass", "role": "VENDOR" }
   ],
 
   "defaultLocations": [
     { "name": "Downtown" },
     { "name": "Uptown" },
     { "name": "Midtown" },
-    { "name": "Chinatown" }
+    { "name": "Chinatown" },
+    { "name": "Beachfront" },
+    { "name": "Old Town" }
   ],
 
   "defaultRestaurants": [
@@ -61,7 +38,7 @@
     {
       "name": "Taco Town",
       "locationId": 3,
-      "postedById": 1,
+      "postedById": 3,
       "website": "https://tacotown.com",
       "phone": "808-555-8765",
       "menuLink": "https://tacotown.com/menu",
@@ -75,6 +52,24 @@
       "phone": "808-555-4321",
       "menuLink": "https://dragonnoodles.com/menu",
       "onlineOrderLink": "https://dragonnoodles.com/order"
+    },
+    {
+      "name": "Pizza Haven",
+      "locationId": 5,
+      "postedById": 4,
+      "website": "https://pizzahaven.com",
+      "phone": "808-555-9876",
+      "menuLink": "https://pizzahaven.com/menu",
+      "onlineOrderLink": "https://pizzahaven.com/order"
+    },
+    {
+      "name": "Steakhouse Supreme",
+      "locationId": 6,
+      "postedById": 5,
+      "website": "https://steakhousesupreme.com",
+      "phone": "808-555-6543",
+      "menuLink": "https://steakhousesupreme.com/menu",
+      "onlineOrderLink": "https://steakhousesupreme.com/order"
     }
   ],
 
@@ -82,6 +77,8 @@
     { "userId": 1, "restaurantId": 1 },
     { "userId": 1, "restaurantId": 3 },
     { "userId": 2, "restaurantId": 2 },
-    { "userId": 2, "restaurantId": 4 }
+    { "userId": 2, "restaurantId": 4 },
+    { "userId": 2, "restaurantId": 6 },
+    { "userId": 1, "restaurantId": 5 }
   ]
 }
