@@ -8,7 +8,9 @@ import { usePathname } from 'next/navigation';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import {
   BoxArrowRight,
+  Heart,
   Lock,
+  PencilSquare,
   PersonFill,
   PersonPlusFill,
 } from 'react-bootstrap-icons';
@@ -43,63 +45,57 @@ const NavBar: React.FC = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto justify-content-start">
-          <Nav.Link
-            id="add-stuff-nav"
-            href="/list"
-            key="add"
-            active={pathName === '/add'}
-          >
-                    Directory
-          </Nav.Link>
-              {currentUser
-              ? [
-                  <Nav.Link
-                    id="list-stuff-nav"
-                    href="/map"
-                    key="list"
-                    active={pathName === '/map'}
-                  >
-                    Map
-                  </Nav.Link>,
-                  <Nav.Link
-                    id="list-stuff-nav"
-                    href="/favorites"
-                    key="list"
-                    active={pathName === '/favorites'}
-                  >
-                  Favorites
-                  </Nav.Link>,
-                ]
-              : ''}
-            {currentUser && role === 'ADMIN' ? (
-              <Nav.Link
-                id="admin-stuff-nav"
-                href="/admin"
-                key="admin"
-                active={pathName === '/admin'}
-              >
-                Admin
-              </Nav.Link>
-            ) : (
-              ''
-            )}
+            <Nav.Link
+              id="add-stuff-nav"
+              href="/"
+              key="add"
+              active={pathName === '/add'}
+            >
+              Directory
+            </Nav.Link>
+            <Nav.Link
+              id="list-stuff-nav"
+              href="/map"
+              key="list"
+              active={pathName === '/map'}
+            >
+              Map
+            </Nav.Link>
           </Nav>
           <Nav>
             {session ? (
               <NavDropdown id="login-dropdown" title={currentUser}>
-                <NavDropdown.Item
-                  id="login-dropdown-sign-out"
-                  href="/api/auth/signout"
-                >
-                  <BoxArrowRight />
-                  Sign Out
+                <NavDropdown.Item href="/favorites">
+                  <Heart />
+                  {' '}
+                  Favorites
                 </NavDropdown.Item>
+                {currentUser && (role === 'ADMIN' || role === 'VENDOR') ? (
+                  <NavDropdown.Item
+                    href="/admin"
+                  >
+                    <PencilSquare />
+                    {' '}
+                    Admin
+                  </NavDropdown.Item>
+                ) : (
+                  ''
+                )}
                 <NavDropdown.Item
                   id="login-dropdown-change-password"
                   href="/auth/change-password"
                 >
                   <Lock />
+                  {' '}
                   Change Password
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  id="login-dropdown-sign-out"
+                  href="/api/auth/signout"
+                >
+                  <BoxArrowRight />
+                  {' '}
+                  Sign Out
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (

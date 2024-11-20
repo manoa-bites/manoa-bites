@@ -1,17 +1,39 @@
-import { Container, Image } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
+import { prisma } from '@/lib/prisma';
+import RestaurantCard from '@/components/RestaurantCard';
 
-/** The Home page. */
-const Home = () => (
-  <main>
-    <Container id="landing-page" fluid className=" justify-content-center py-3">
-      <Container className="d-flex justify-content-center align-items-center">
-        <Image src="/FullLogo.png" alt="Manoa Bites" style={{ height: '500px', borderRadius: '50%' }} />
+/** Renders a list of restuarants for the directory page. */
+const ListPage = async () => {
+  // Protect the page, only logged in users can access it.
+  // const session = await getServerSession(authOptions);
+  // loggedInProtectedPage(
+  //   session as {
+  //     user: { email: string; id: string; randomKey: string };
+  //     // eslint-disable-next-line @typescript-eslint/comma-dangle
+  //   } | null,
+  // );
+  const restaurants = await prisma.restaurant.findMany();
+  // console.log(stuff);
+  return (
+    <main>
+      <Container id="list" fluid className="py-3">
+        <Container>
+          <Row>
+            <Col>
+              <h1 className="text-center">Restaurants at Manoa</h1>
+              <Row xs={1} md={2} lg={3} className="g-4">
+                {restaurants.map((restaurant) => (
+                  <Col key={restaurant.name}>
+                    <RestaurantCard restaurant={restaurant} />
+                  </Col>
+                ))}
+              </Row>
+            </Col>
+          </Row>
+        </Container>
       </Container>
-      <Container className="d-flex justify-content-center align-items-center">
-        <h2>Find your favorite food spots on campus!</h2>
-      </Container>
-    </Container>
-  </main>
-);
+    </main>
+  );
+};
 
-export default Home;
+export default ListPage;
