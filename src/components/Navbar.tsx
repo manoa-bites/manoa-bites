@@ -43,16 +43,16 @@ const NavBar: React.FC = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto justify-content-start">
-            {currentUser
-              ? [
-                  <Nav.Link
-                    id="add-stuff-nav"
-                    href="/list"
-                    key="add"
-                    active={pathName === '/add'}
-                  >
+          <Nav.Link
+            id="add-stuff-nav"
+            href="/list"
+            key="add"
+            active={pathName === '/add'}
+          >
                     Directory
-                  </Nav.Link>,
+          </Nav.Link>
+              {currentUser
+              ? [
                   <Nav.Link
                     id="list-stuff-nav"
                     href="/map"
