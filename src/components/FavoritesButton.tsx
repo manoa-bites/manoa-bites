@@ -1,4 +1,4 @@
-import { useSession } from 'next-auth/react'; // Assuming you're using next-auth
+/* import { useSession } from 'next-auth/react'; // Assuming you're using next-auth
 import { Button } from 'react-bootstrap';
 import { Heart } from 'react-bootstrap-icons';
 import { useForm } from 'react-hook-form';
@@ -55,3 +55,4 @@ const FavoriteButton = ({ restaurant }: { restaurant: Restaurant }) => {
 };
 
 export default FavoriteButton;
+*/
