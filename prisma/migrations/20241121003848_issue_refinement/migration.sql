@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Issue" ADD COLUMN     "contactinfo" TEXT,
+ADD COLUMN     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN     "name" TEXT;

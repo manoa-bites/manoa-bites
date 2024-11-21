@@ -17,6 +17,8 @@ export const EditStuffSchema = Yup.object({
 
 export const IssueSchema = Yup.object({
   topic: Yup.string().oneOf(['bug', 'feature', 'wronginformation', 'other']).required(),
+  name: Yup.string().optional(),
+  contactinfo: Yup.string().optional(),
   description: Yup.string().required(),
 });
 

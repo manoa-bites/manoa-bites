@@ -77,11 +77,8 @@ enum Topic {
 model Issue {
   id          Int    @id @default(autoincrement())
   topic       Topic
+  name        String?
+  contactinfo String?
   description String
-}
-
-enum Role {
-  USER
-  VENDOR
-  ADMIN
+  createdAt   DateTime @default(now())
 }

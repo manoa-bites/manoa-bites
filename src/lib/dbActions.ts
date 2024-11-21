@@ -97,7 +97,10 @@ export async function changePassword(credentials: { email: string; password: str
   });
 }
 
-export async function reportIssue(issue: { topic: string; description: string }) {
+export async function reportIssue(issue: {
+  name: any;
+  contactinfo: any; topic: string; description: string 
+}) {
   let topic: Topic = 'other';
   if (issue.topic === 'bug') {
     topic = 'bug';
@@ -111,6 +114,8 @@ export async function reportIssue(issue: { topic: string; description: string })
   await prisma.issue.create({
     data: {
       topic,
+      name: issue.name,
+      contactinfo: issue.contactinfo,
       description: issue.description,
     },
   });

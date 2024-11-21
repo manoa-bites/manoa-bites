@@ -57,6 +57,24 @@ const IssueForm: React.FC = () => {
                   <div className="invalid-feedback">{errors.topic?.message}</div>
                 </Form.Group>
                 <Form.Group>
+                  <Form.Label>Name</Form.Label>
+                  <input
+                    type="text"
+                    {...register('name')}
+                    className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+                  />
+                  <div className="invalid-feedback">{errors.name?.message}</div>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Email/Phone-Number</Form.Label>
+                  <input
+                    type="text"
+                    {...register('contactinfo')}
+                    className={`form-control ${errors.contactinfo ? 'is-invalid' : ''}`}
+                  />
+                  <div className="invalid-feedback">{errors.contactinfo?.message}</div>
+                </Form.Group>
+                <Form.Group>
                   <Form.Label>Brief Description</Form.Label>
                   <input
                     type="text"
