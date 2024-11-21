@@ -98,8 +98,10 @@ export async function changePassword(credentials: { email: string; password: str
 }
 
 export async function reportIssue(issue: {
-  name: any;
-  contactinfo: any; topic: string; description: string 
+  name?: string;
+  contactinfo?: string;
+  topic: string;
+  description: string
 }) {
   let topic: Topic = 'other';
   if (issue.topic === 'bug') {
@@ -119,5 +121,5 @@ export async function reportIssue(issue: {
       description: issue.description,
     },
   });
-  redirect('/list');
+  redirect('src/app/page.tsx');
 }

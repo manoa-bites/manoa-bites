@@ -57,7 +57,7 @@ const IssueForm: React.FC = () => {
                   <div className="invalid-feedback">{errors.topic?.message}</div>
                 </Form.Group>
                 <Form.Group>
-                  <Form.Label>Name</Form.Label>
+                  <Form.Label>Name (Optional)</Form.Label>
                   <input
                     type="text"
                     {...register('name')}
@@ -66,7 +66,7 @@ const IssueForm: React.FC = () => {
                   <div className="invalid-feedback">{errors.name?.message}</div>
                 </Form.Group>
                 <Form.Group>
-                  <Form.Label>Email/Phone-Number</Form.Label>
+                  <Form.Label>Email/Phone-Number (Optional)</Form.Label>
                   <input
                     type="text"
                     {...register('contactinfo')}
