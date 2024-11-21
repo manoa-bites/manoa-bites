@@ -10,7 +10,7 @@ import { reportIssue } from '@/lib/dbActions';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { IssueSchema } from '@/lib/validationSchemas';
 
-const onSubmit = async (data: { topic: string, description: string }) => {
+const onSubmit = async (data: { topic: string, name: string, contactinfo: string, description: string }) => {
   // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
   await reportIssue(data);
   swal('Success', 'Your problem has been reported', 'success', {
