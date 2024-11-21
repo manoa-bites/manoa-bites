@@ -1,13 +1,10 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import swal from 'sweetalert';
-import { redirect } from 'next/navigation';
 import { reportIssue } from '@/lib/dbActions';
-import LoadingSpinner from '@/components/LoadingSpinner';
 import { IssueSchema } from '@/lib/validationSchemas';
 
 const onSubmit = async (data: { topic: string, name?: string, contactinfo?: string, description: string }) => {
@@ -19,8 +16,6 @@ const onSubmit = async (data: { topic: string, name?: string, contactinfo?: stri
 };
 
 const IssueForm: React.FC = () => {
-  const { status } = useSession();
-  // console.log('IssueForm', status, session);
   const {
     register,
     handleSubmit,
@@ -29,13 +24,6 @@ const IssueForm: React.FC = () => {
   } = useForm({
     resolver: yupResolver(IssueSchema),
   });
-  if (status === 'loading') {
-    return <LoadingSpinner />;
-  }
-  if (status === 'unauthenticated') {
-    redirect('/auth/signin');
-  }
-
   return (
     <Container className="py-3">
       <Row className="justify-content-center">
