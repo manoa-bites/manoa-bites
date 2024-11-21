@@ -46,7 +46,7 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => (
       </ListGroup>
     </Card.Body>
     <Card.Footer>
-      <FavoriteButton restaurant={(restaurant)} />
+      <FavoriteButton restaurant={restaurant} />
     </Card.Footer>
   </Card>
 );
