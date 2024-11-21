@@ -56,7 +56,7 @@ const IssueForm: React.FC = () => {
                   </select>
                   <div className="invalid-feedback">{errors.topic?.message}</div>
                 </Form.Group>
-                <Form.Group>
+                <Form.Group className="pt-3">
                   <Form.Label>Name (Optional)</Form.Label>
                   <input
                     type="text"
@@ -65,7 +65,7 @@ const IssueForm: React.FC = () => {
                   />
                   <div className="invalid-feedback">{errors.name?.message}</div>
                 </Form.Group>
-                <Form.Group>
+                <Form.Group className="pt-3">
                   <Form.Label>Email/Phone-Number (Optional)</Form.Label>
                   <input
                     type="text"
@@ -74,7 +74,7 @@ const IssueForm: React.FC = () => {
                   />
                   <div className="invalid-feedback">{errors.contactinfo?.message}</div>
                 </Form.Group>
-                <Form.Group>
+                <Form.Group className="pt-3">
                   <Form.Label>Brief Description</Form.Label>
                   <input
                     type="text"
