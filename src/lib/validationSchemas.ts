@@ -22,6 +22,11 @@ export const IssueSchema = Yup.object({
   description: Yup.string().required(),
 });
 
+export const FavoriteSchema = Yup.object({
+  userFavoritedId: Yup.number().required(),
+  restaurantFavoritedId: Yup.number().required(),
+});
+
 export interface Restaurant {
   id: number;
   locationId: number;
