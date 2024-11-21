@@ -23,7 +23,7 @@ const ListPage = async () => {
               <h1 className="text-center">Restaurants at Manoa</h1>
               <Row xs={1} md={2} lg={3} className="g-4">
                 {restaurants.map((restaurant) => (
-                  <Col key={restaurant.id}>
+                  <Col key={restaurant.name}>
                     <RestaurantCard restaurant={restaurant} />
                   </Col>
                 ))}
