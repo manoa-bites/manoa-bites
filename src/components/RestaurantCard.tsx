@@ -1,9 +1,9 @@
 'use client';
 
 import { Restaurant } from '@/lib/validationSchemas';
-import { Card, ListGroup } from 'react-bootstrap/';
+import { Button, Card, ListGroup } from 'react-bootstrap/';
 import Link from 'next/link';
-import FavoriteButton from './FavoritesButton';
+import { Heart } from 'react-bootstrap-icons';
 
 const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
   console.log(restaurant); // For debugging
@@ -48,7 +48,10 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
         </ListGroup>
       </Card.Body>
       <Card.Footer>
-        <FavoriteButton restaurant={restaurant} />
+        <Button variant="secondary">
+          <Heart />
+          Add to Favorites
+        </Button>
       </Card.Footer>
     </Card>
   );
