@@ -59,6 +59,9 @@ model Restaurant {
   phone           String?
   menuLink        String?
   onlineOrderLink String?
+  image           String?
+  latitude        Decimal?
+  longitude       Decimal?
 }
 
 model FavoriteRestaurant {
