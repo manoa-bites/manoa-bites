@@ -25,10 +25,6 @@ const FavoriteButton = ({ restaurant }: { restaurant: Restaurant }) => {
     return <LoadingSpinner />;
   }
 
-  if (status === 'unauthenticated') {
-    redirect('/auth/signin');
-  }
-
   // On submit handler
   const onSubmit = async (data: { userFavoritedId: number, restaurantFavoritedId: number }) => {
     // Assuming `addFavorite` is a function that adds the favorite to the database
@@ -46,8 +42,19 @@ const FavoriteButton = ({ restaurant }: { restaurant: Restaurant }) => {
       <input type="hidden" {...register('userFavoritedId')} value={userId} />
       <input type="hidden" {...register('restaurantFavoritedId')} value={restaurant.id} />
 
-      <Button type="submit" variant="secondary">
+      <Button
+        type="submit"
+        variant="secondary"
+        onClick={() => {
+          if (!session) {
+            swal('Error', 'You must be logged in to add favorites.', 'error', {
+              timer: 2000,
+            });
+          }
+        }}
+      >
         <Heart />
+        {' '}
         Add to Favorites
       </Button>
     </form>
