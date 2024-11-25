@@ -123,3 +123,12 @@ export async function reportIssue(issue: {
   });
   redirect('src/app/page.tsx');
 }
+
+export async function addFavorite(favorites: { userFavoritedId: number; restaurantFavoritedId: number }) {
+  await prisma.favoriteRestaurant.create({
+    data: {
+      userFavoritedId: favorites.userFavoritedId,
+      restaurantFavoritedId: favorites.restaurantFavoritedId,
+    },
+  });
+}
