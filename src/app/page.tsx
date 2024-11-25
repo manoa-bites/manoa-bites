@@ -1,39 +1,42 @@
-import { Col, Container, Row } from 'react-bootstrap';
-import { prisma } from '@/lib/prisma';
-import RestaurantCard from '@/components/RestaurantCard';
+import SearchBar from '@/components/SearchBar';
+import { Col, Container, Row, Image } from 'react-bootstrap';
 
-/** Renders a list of restuarants for the directory page. */
-const ListPage = async () => {
-  // Protect the page, only logged in users can access it.
-  // const session = await getServerSession(authOptions);
-  // loggedInProtectedPage(
-  //   session as {
-  //     user: { email: string; id: string; randomKey: string };
-  //     // eslint-disable-next-line @typescript-eslint/comma-dangle
-  //   } | null,
-  // );
-  const restaurants = await prisma.restaurant.findMany();
-  // console.log(stuff);
-  return (
-    <main>
-      <Container id="list" fluid className="py-3">
-        <Container>
+/** The Home page. */
+const Home = () => (
+  <main>
+    <Container id="landing-page" fluid className="py-3">
+      <Row className="align-middle text-center">
+        <Col xs={4} />
+        <Col xs={4}>
           <Row>
-            <Col>
-              <h1 className="text-center">Restaurants at Manoa</h1>
-              <Row xs={1} md={2} lg={3} className="g-4">
-                {restaurants.map((restaurant) => (
-                  <Col key={restaurant.name}>
-                    <RestaurantCard restaurant={restaurant} />
-                  </Col>
-                ))}
-              </Row>
-            </Col>
+            <h1 className="rainbow-text">UHM-Manoa-Bites!</h1>
           </Row>
-        </Container>
-      </Container>
-    </main>
-  );
-};
+          <h2>Find your favorite food spots on campus!</h2>
+        </Col>
+        <Col md={8} className="mx-auto">
+          <SearchBar />
+        </Col>
+      </Row>
+      <Row className="align-middle text-center row p-4">
+        <Col xs={4}>
+          <Image src="/aloha-funny.jpg" alt="aloha" width="120px" />
+          <h1 className="p-2">Already A Munch?</h1>
+          <h2>Login in Here!</h2>
+        </Col>
+        <Col xs={4}>
+          <Image src="/eat.png" alt="play" width="160px" />
+          <h1 className="p-2">Looking for UHM-Manoa-bites?</h1>
+          <h2>Sign Up Now Here!</h2>
+        </Col>
+        <Col xs={4}>
+          <Image src="/cashier.jpg" alt="vendor" width="150px" />
+          <h1 className="p-2">Do You Want To Sell?</h1>
+          <h2>Become A Vendor Here!</h2>
+        </Col>
+      </Row>
+    </Container>
+    );
+  </main>
+);
 
-export default ListPage;
+export default Home;

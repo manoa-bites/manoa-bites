@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+'use client';
+
+import React from 'react';
 import { Button } from 'react-bootstrap';
 
-interface SearchBarProps {
-  onSearch: (query: string) => void;
-}
+const SearchBar = () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialQuery = urlParams.get('search') || '';
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = React.useState(initialQuery);
 
   const handleSearch = () => {
     onSearch(query);
