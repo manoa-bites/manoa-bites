@@ -136,6 +136,35 @@ export async function reportIssue(issue: {
   redirect('src/app/page.tsx');
 }
 
+export async function isRestaurantFavorited(
+  userFavoriteEmail: string,
+  restaurantFavoritedId: number,
+) {
+  const currentUser = await prisma.user.findUnique({
+    where: {
+      email: userFavoriteEmail,
+    },
+  });
+  const currentUserId = currentUser?.id;
+
+  if (!currentUserId) {
+    throw new Error('User not found');
+  }
+
+  const existingFavorite = await prisma.favoriteRestaurant.findFirst({
+    where: {
+      userFavoritedId: currentUserId,
+      restaurantFavoritedId,
+    },
+  });
+
+  if (existingFavorite) {
+    return true;
+  }
+
+  return false;
+}
+
 export async function addFavorite(favorites: {
   userFavoriteEmail: string;
   restaurantFavoritedId: number;
@@ -151,14 +180,11 @@ export async function addFavorite(favorites: {
     throw new Error('User not found');
   }
 
-  const existingFavorite = await prisma.favoriteRestaurant.findFirst({
-    where: {
-      userFavoritedId: currentUserId,
-      restaurantFavoritedId: favorites.restaurantFavoritedId,
-    },
-  });
-
-  if (existingFavorite) {
+  const restaurantFavorited = await isRestaurantFavorited(
+    favorites.userFavoriteEmail,
+    favorites.restaurantFavoritedId,
+  );
+  if (restaurantFavorited) {
     console.log('Favorite already exists');
     return;
   }
