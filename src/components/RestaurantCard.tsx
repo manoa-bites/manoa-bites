@@ -11,24 +11,33 @@ import {
   removeFavorite,
 } from '@/lib/dbActions';
 import { useEffect, useState } from 'react';
+import LoadingSpinner from './LoadingSpinner';
 
 const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
   const { data: session } = useSession();
   const currentUserEmail = session?.user?.email as string;
 
   const [isFavorited, setIsFavorited] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (session) {
       const fetchFavoritedStatus = async () => {
-        const favorited = await isRestaurantFavorited(
-          currentUserEmail,
-          restaurant.id,
-        );
-        setIsFavorited(favorited);
+        try {
+          setLoading(true);
+          const favorited = await isRestaurantFavorited(
+            currentUserEmail,
+            restaurant.id,
+          );
+          setIsFavorited(favorited);
+        } finally {
+          setLoading(false);
+        }
       };
 
       fetchFavoritedStatus();
+    } else {
+      setLoading(false);
     }
   }, [currentUserEmail, restaurant.id, session]);
 
@@ -110,11 +119,13 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
           </ListGroup>
         </Card.Body>
         <Card.Footer>
-          {isFavorited ? (
+          {loading && <LoadingSpinner />}
+          {!loading && isFavorited && (
             <Button variant="secondary" onClick={handleRemoveFavorite}>
               <HeartFill />
             </Button>
-          ) : (
+          )}
+          {!loading && !isFavorited && (
             <Button variant="secondary" onClick={handleAddFavorite}>
               <Heart />
             </Button>
