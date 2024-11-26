@@ -147,12 +147,28 @@ export async function addFavorite(favorites: {
   });
   const currentUserId = currentUser?.id;
 
-  if (currentUserId) {
-    await prisma.favoriteRestaurant.create({
-      data: {
-        userFavoritedId: currentUserId,
-        restaurantFavoritedId: favorites.restaurantFavoritedId,
-      },
-    });
+  if (!currentUserId) {
+    throw new Error('User not found');
   }
+
+  const existingFavorite = await prisma.favoriteRestaurant.findFirst({
+    where: {
+      userFavoritedId: currentUserId,
+      restaurantFavoritedId: favorites.restaurantFavoritedId,
+    },
+  });
+
+  if (existingFavorite) {
+    console.log('Favorite already exists');
+    return;
+  }
+
+  await prisma.favoriteRestaurant.create({
+    data: {
+      userFavoritedId: currentUserId,
+      restaurantFavoritedId: favorites.restaurantFavoritedId,
+    },
+  });
+
+  console.log('Favorite added successfully');
 }
