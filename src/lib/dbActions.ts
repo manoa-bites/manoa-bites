@@ -198,3 +198,37 @@ export async function addFavorite(favorites: {
 
   console.log('Favorite added successfully');
 }
+
+export async function removeFavorite(favorites: {
+  userFavoriteEmail: string;
+  restaurantFavoritedId: number;
+}) {
+  const currentUser = await prisma.user.findUnique({
+    where: {
+      email: favorites.userFavoriteEmail,
+    },
+  });
+  const currentUserId = currentUser?.id;
+
+  if (!currentUserId) {
+    throw new Error('User not found');
+  }
+
+  const restaurantFavorited = await isRestaurantFavorited(
+    favorites.userFavoriteEmail,
+    favorites.restaurantFavoritedId,
+  );
+  if (!restaurantFavorited) {
+    console.log('No favorite found');
+    return;
+  }
+
+  await prisma.favoriteRestaurant.deleteMany({
+    where: {
+      userFavoritedId: currentUserId,
+      restaurantFavoritedId: favorites.restaurantFavoritedId,
+    },
+  });
+
+  console.log('Favorite(s) remove successfully!');
+}

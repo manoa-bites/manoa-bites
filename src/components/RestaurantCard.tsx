@@ -5,7 +5,11 @@ import { Card, ListGroup, Button } from 'react-bootstrap/';
 import { Heart, HeartFill } from 'react-bootstrap-icons';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import { addFavorite, isRestaurantFavorited } from '@/lib/dbActions';
+import {
+  addFavorite,
+  isRestaurantFavorited,
+  removeFavorite,
+} from '@/lib/dbActions';
 import { useEffect, useState } from 'react';
 
 const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
@@ -72,7 +76,30 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
         <Card.Footer>
           {isFavorited ? (
             <main>
-              <Button variant="secondary">
+              <Button
+                variant="secondary"
+                onClick={async () => {
+                  if (!session) {
+                    swal(
+                      'Error',
+                      'You must be logged in to add favorites.',
+                      'error',
+                      {
+                        timer: 10000,
+                      },
+                    );
+                    return;
+                  }
+
+                  if (session?.user?.email) {
+                    const newFavorite = {
+                      userFavoriteEmail: session?.user?.email as string,
+                      restaurantFavoritedId: restaurant.id,
+                    };
+                    await removeFavorite(newFavorite);
+                  }
+                }}
+              >
                 <HeartFill />
               </Button>
             </main>
