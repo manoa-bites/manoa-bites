@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import swal from 'sweetalert';
 import { addFavorite } from '@/lib/dbActions';
-import { redirect } from 'next/navigation';
 import { FavoriteSchema } from '@/lib/validationSchemas';
 import { Restaurant } from '@prisma/client';
 import LoadingSpinner from './LoadingSpinner';
@@ -48,11 +47,13 @@ const FavoriteButton = ({ restaurant }: { restaurant: Restaurant }) => {
         onClick={() => {
           if (!session) {
             swal('Error', 'You must be logged in to add favorites.', 'error', {
-              timer: 2000,
+              timer: 10000,
             });
+            // window.location.href = '/auth/signin'; // Redirect to sign-in page
           }
         }}
       >
+
         <Heart />
         {' '}
         Add to Favorites

@@ -1,8 +1,7 @@
 'use client';
 
 import { Restaurant } from '@/lib/validationSchemas';
-import { Card, ListGroup, Button } from 'react-bootstrap/';
-import { Heart } from 'react-bootstrap-icons';
+import { Card, ListGroup } from 'react-bootstrap/';
 import Link from 'next/link';
 import FavoritesButton from './FavoritesButton';
 

@@ -28,6 +28,7 @@ model User {
   email      String       @unique
   password   String
   role       Role         @default(USER)
+  favoriteRestaurants FavoriteRestaurant[]
 }
 
 enum Condition {
@@ -59,12 +60,15 @@ model Restaurant {
   phone           String?
   menuLink        String?
   onlineOrderLink String?
+  favoriteRestaurants    FavoriteRestaurant[]
 }
 
 model FavoriteRestaurant {
   id              Int     @id @default(autoincrement())
   userFavoritedId Int
   restaurantFavoritedId Int
+  user                  User       @relation(fields: [userFavoritedId], references: [id])
+  restaurant            Restaurant @relation(fields: [restaurantFavoritedId], references: [id])
 }
 
 enum Topic {

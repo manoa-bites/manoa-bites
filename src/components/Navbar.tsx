@@ -65,7 +65,7 @@ const NavBar: React.FC = () => {
           <Nav>
             {session ? (
               <NavDropdown id="login-dropdown" title={currentUser}>
-                <NavDropdown.Item href="/favorites">
+                <NavDropdown.Item href="/favorites2">
                   <Heart />
                   {' '}
                   Favorites
