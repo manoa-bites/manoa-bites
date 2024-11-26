@@ -9,7 +9,12 @@ import { prisma } from './prisma';
  * Adds a new stuff to the database.
  * @param stuff, an object with the following properties: name, quantity, owner, condition.
  */
-export async function addStuff(stuff: { name: string; quantity: number; owner: string; condition: string }) {
+export async function addStuff(stuff: {
+  name: string;
+  quantity: number;
+  owner: string;
+  condition: string;
+}) {
   // console.log(`addStuff data: ${JSON.stringify(stuff, null, 2)}`);
   let condition: Condition = 'good';
   if (stuff.condition === 'poor') {
@@ -67,7 +72,11 @@ export async function deleteStuff(id: number) {
  * Creates a new user in the database.
  * @param credentials, an object with the following properties: email, password.
  */
-export async function createUser(credentials: { email: string; password: string; role?: Role }) {
+export async function createUser(credentials: {
+  email: string;
+  password: string;
+  role?: Role;
+}) {
   const { email, password, role } = credentials;
 
   const hashedPassword = await hash(password, 10);
@@ -86,7 +95,10 @@ export async function createUser(credentials: { email: string; password: string;
  * Changes the password of an existing user in the database.
  * @param credentials, an object with the following properties: email, password.
  */
-export async function changePassword(credentials: { email: string; password: string }) {
+export async function changePassword(credentials: {
+  email: string;
+  password: string;
+}) {
   // console.log(`changePassword data: ${JSON.stringify(credentials, null, 2)}`);
   const password = await hash(credentials.password, 10);
   await prisma.user.update({
@@ -101,7 +113,7 @@ export async function reportIssue(issue: {
   name?: string;
   contactinfo?: string;
   topic: string;
-  description: string
+  description: string;
 }) {
   let topic: Topic = 'other';
   if (issue.topic === 'bug') {
@@ -122,4 +134,25 @@ export async function reportIssue(issue: {
     },
   });
   redirect('src/app/page.tsx');
+}
+
+export async function addFavorite(favorites: {
+  userFavoriteEmail: string;
+  restaurantFavoritedId: number;
+}) {
+  const currentUser = await prisma.user.findUnique({
+    where: {
+      email: favorites.userFavoriteEmail,
+    },
+  });
+  const currentUserId = currentUser?.id;
+
+  if (currentUserId) {
+    await prisma.favoriteRestaurant.create({
+      data: {
+        userFavoritedId: currentUserId,
+        restaurantFavoritedId: favorites.restaurantFavoritedId,
+      },
+    });
+  }
 }
