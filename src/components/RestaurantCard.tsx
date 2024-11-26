@@ -19,19 +19,55 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
   const [isFavorited, setIsFavorited] = useState(false);
 
   useEffect(() => {
-    async function getIsFavorited() {
-      const x = await isRestaurantFavorited(currentUserEmail, restaurant.id);
-      return x;
-    }
     if (session) {
       const fetchFavoritedStatus = async () => {
-        const favorited = await getIsFavorited();
+        const favorited = await isRestaurantFavorited(
+          currentUserEmail,
+          restaurant.id,
+        );
         setIsFavorited(favorited);
       };
 
       fetchFavoritedStatus();
     }
-  });
+  }, [currentUserEmail, restaurant.id, session]);
+
+  const handleAddFavorite = async () => {
+    if (!session) {
+      swal('Error', 'You must be logged in to add favorites.', 'error', {
+        timer: 10000,
+      });
+      return;
+    }
+
+    if (currentUserEmail) {
+      const newFavorite = {
+        userFavoriteEmail: currentUserEmail,
+        restaurantFavoritedId: restaurant.id,
+      };
+      await addFavorite(newFavorite);
+      setIsFavorited(true);
+    }
+  };
+
+  const handleRemoveFavorite = async () => {
+    if (!session) {
+      swal('Error', 'You must be logged in to remove favorites.', 'error', {
+        timer: 10000,
+      });
+      return;
+    }
+
+    if (currentUserEmail) {
+      const favoriteToRemove = {
+        userFavoriteEmail: currentUserEmail,
+        restaurantFavoritedId: restaurant.id,
+      };
+      await removeFavorite(favoriteToRemove);
+      setIsFavorited(false);
+    }
+  };
+
   return (
     <main>
       <Card className="h-100 mb-3">
@@ -75,63 +111,13 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
         </Card.Body>
         <Card.Footer>
           {isFavorited ? (
-            <main>
-              <Button
-                variant="secondary"
-                onClick={async () => {
-                  if (!session) {
-                    swal(
-                      'Error',
-                      'You must be logged in to add favorites.',
-                      'error',
-                      {
-                        timer: 10000,
-                      },
-                    );
-                    return;
-                  }
-
-                  if (session?.user?.email) {
-                    const newFavorite = {
-                      userFavoriteEmail: session?.user?.email as string,
-                      restaurantFavoritedId: restaurant.id,
-                    };
-                    await removeFavorite(newFavorite);
-                  }
-                }}
-              >
-                <HeartFill />
-              </Button>
-            </main>
+            <Button variant="secondary" onClick={handleRemoveFavorite}>
+              <HeartFill />
+            </Button>
           ) : (
-            <main>
-              <Button
-                variant="secondary"
-                onClick={async () => {
-                  if (!session) {
-                    swal(
-                      'Error',
-                      'You must be logged in to add favorites.',
-                      'error',
-                      {
-                        timer: 10000,
-                      },
-                    );
-                    return;
-                  }
-
-                  if (session?.user?.email) {
-                    const newFavorite = {
-                      userFavoriteEmail: session?.user?.email as string,
-                      restaurantFavoritedId: restaurant.id,
-                    };
-                    await addFavorite(newFavorite);
-                  }
-                }}
-              >
-                <Heart />
-              </Button>
-            </main>
+            <Button variant="secondary" onClick={handleAddFavorite}>
+              <Heart />
+            </Button>
           )}
         </Card.Footer>
       </Card>
