@@ -1,27 +1,36 @@
 'use client';
 
-import React from 'react';
-import { Button } from 'react-bootstrap';
+import { useState } from 'react';
 
-const SearchBar = () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const initialQuery = urlParams.get('search') || '';
+const SearchBar = ({ initialResults }: { initialResults: any[] }) => {
+  const [results, setResults] = useState(initialResults);
+  const [query, setQuery] = useState('');
 
-  const [query, setQuery] = React.useState(initialQuery);
+  const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setQuery(value);
 
-  const handleSearch = () => {
-    onSearch(query);
+    if (value.length > 2) {
+      // eslint-disable-next-line max-len
+      const filteredResults = initialResults.filter((restaurant) => restaurant.name.toLowerCase().includes(value.toLowerCase()));
+      setResults(filteredResults);
+    }
   };
 
   return (
     <div>
       <input
         type="text"
-        placeholder="Search for restaurants..."
         value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        onChange={handleSearch}
+        placeholder="Search restaurants..."
+        className="search-input"
       />
-      <Button onClick={handleSearch}>Search</Button>
+      <ul>
+        {results.map((restaurant) => (
+          <li key={restaurant.id}>{restaurant.name}</li>
+        ))}
+      </ul>
     </div>
   );
 };
