@@ -3,7 +3,9 @@ import * as Yup from 'yup';
 export const AddStuffSchema = Yup.object({
   name: Yup.string().required(),
   quantity: Yup.number().positive().required(),
-  condition: Yup.string().oneOf(['excellent', 'good', 'fair', 'poor']).required(),
+  condition: Yup.string()
+    .oneOf(['excellent', 'good', 'fair', 'poor'])
+    .required(),
   owner: Yup.string().required(),
 });
 
@@ -24,17 +26,20 @@ export const AddLocationSchema = Yup.object({
   name: Yup.string().required(),
 });
 
-
 export const EditStuffSchema = Yup.object({
   id: Yup.number().required(),
   name: Yup.string().required(),
   quantity: Yup.number().positive().required(),
-  condition: Yup.string().oneOf(['excellent', 'good', 'fair', 'poor']).required(),
+  condition: Yup.string()
+    .oneOf(['excellent', 'good', 'fair', 'poor'])
+    .required(),
   owner: Yup.string().required(),
 });
 
 export const IssueSchema = Yup.object({
-  topic: Yup.string().oneOf(['bug', 'feature', 'wronginformation', 'other']).required(),
+  topic: Yup.string()
+    .oneOf(['bug', 'feature', 'wronginformation', 'other'])
+    .required(),
   name: Yup.string(),
   contactinfo: Yup.string(),
   description: Yup.string().required(),

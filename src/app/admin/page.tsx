@@ -56,7 +56,10 @@ const AdminPage = async () => {
       <Container id="list" fluid className="py-3">
         <Row>
           <Col>
-            <h1>List Restaurants {role}</h1>
+            <h1>
+              List Restaurants
+              {role}
+            </h1>
             <Table striped bordered hover>
               <thead>
                 <tr>
@@ -99,7 +102,10 @@ const AdminPage = async () => {
           <main>
             <Row>
               <Col>
-                <h1>List Locations {role}</h1>
+                <h1>
+                  List Locations
+                  {role}
+                </h1>
                 <Table striped bordered hover>
                   <thead>
                     <tr>
@@ -108,14 +114,12 @@ const AdminPage = async () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {locations.map(async (location) => {
-                      return (
-                        <LocationItemAdmin
-                          id={location.id}
-                          name={location.name}
-                        />
-                      );
-                    })}
+                    {locations.map(async (location) => (
+                      <LocationItemAdmin
+                        id={location.id}
+                        name={location.name}
+                      />
+                    ))}
                   </tbody>
                 </Table>
               </Col>
@@ -126,7 +130,10 @@ const AdminPage = async () => {
           <div>
             <Row>
               <Col>
-                <h1>List Users {role}</h1>
+                <h1>
+                  List Users
+                  {role}
+                </h1>
                 <Table striped bordered hover>
                   <thead>
                     <tr>
