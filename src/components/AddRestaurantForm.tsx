@@ -18,32 +18,16 @@ import { addRestaurant } from '@/lib/dbActions';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { AddRestaurantSchema } from '@/lib/validationSchemas';
 import { Location } from '@prisma/client';
+import { useState, ChangeEvent } from 'react';
 
 type Props = {
   currentUserId: number | null;
   locations: Location[];
 };
 
-const onSubmit = async (data: {
-  name: string;
-  website?: string;
-  phone?: string;
-  menuLink?: string;
-  onlineOrderLink?: string;
-  image?: string;
-  latitude?: number;
-  longitude?: number;
-  postedById: number;
-  locationId?: number;
-}) => {
-  // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
-  await addRestaurant(data);
-  swal('Success', 'Your item has been added', 'success', {
-    timer: 2000,
-  });
-};
-
 const AddRestaurantForm: React.FC<Props> = ({ currentUserId, locations }) => {
+  const [base64, setBase64] = useState<string>('');
+
   const session = useSession();
   const {
     register,
@@ -63,6 +47,37 @@ const AddRestaurantForm: React.FC<Props> = ({ currentUserId, locations }) => {
   if (!currentUserId) {
     redirect('/');
   }
+
+  const onSubmit = async (data: {
+    name: string;
+    website?: string;
+    phone?: string;
+    menuLink?: string;
+    onlineOrderLink?: string;
+    latitude?: number;
+    longitude?: number;
+    postedById: number;
+    locationId?: number;
+  }) => {
+    await addRestaurant({ ...data, image: base64 });
+    swal('Success', 'Your item has been added', 'success', {
+      timer: 2000,
+    });
+  };
+
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setBase64(reader.result as string);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <Container className="py-3">
@@ -104,6 +119,27 @@ const AddRestaurantForm: React.FC<Props> = ({ currentUserId, locations }) => {
                     {errors.locationId?.message}
                   </div>
                 </Form.Group>
+                <Form.Group>
+                  <Form.Label>Image</Form.Label>
+                  <input
+                    type="file"
+                    onChange={handleImageChange}
+                    className={`form-control`}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <input
+                    type="text"
+                    // {...register('image')}
+                    value={base64}
+                    className={`form-control ${errors.image ? 'is-invalid' : ''}`}
+                    readOnly
+                  />
+                  <div className="invalid-feedback">
+                    {errors.image?.message}
+                  </div>
+                </Form.Group>
+
                 <Form.Group>
                   <Form.Label>Website</Form.Label>
                   <input
@@ -148,17 +184,7 @@ const AddRestaurantForm: React.FC<Props> = ({ currentUserId, locations }) => {
                     {errors.onlineOrderLink?.message}
                   </div>
                 </Form.Group>
-                <Form.Group>
-                  <Form.Label>Image</Form.Label>
-                  <input
-                    type="text"
-                    {...register('image')}
-                    className={`form-control ${errors.image ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">
-                    {errors.image?.message}
-                  </div>
-                </Form.Group>
+
                 <Form.Group>
                   <Form.Label>Latitude</Form.Label>
                   <input
