@@ -68,6 +68,37 @@ export async function deleteStuff(id: number) {
   redirect('/list');
 }
 
+export async function addRestaurant(data: {
+  name: string;
+  website?: string;
+  phone?: string;
+  menuLink?: string;
+  onlineOrderLink?: string;
+  image?: string;
+  latitude?: number;
+  longitude?: number;
+  postedById: number;
+  locationId?: number;
+}) {
+  await prisma.restaurant.create({
+    data: {
+      name: data.name,
+      website: data.website || null,
+      phone: data.phone || null,
+      menuLink: data.menuLink || null,
+      onlineOrderLink: data.onlineOrderLink || null,
+      image: data.image || null,
+      latitude: data.latitude || null,
+      longitude: data.longitude || null,
+      postedById: data.postedById,
+      locationId: data.locationId || null,
+    },
+  });
+
+  // Redirect to the list page after successfully adding the restaurant
+  redirect('/admin');
+}
+
 /**
  * Creates a new user in the database.
  * @param credentials, an object with the following properties: email, password.

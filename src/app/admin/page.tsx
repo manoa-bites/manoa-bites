@@ -61,13 +61,17 @@ const AdminPage = async () => {
               </thead>
               <tbody>
                 {restaurants.map(async (restaurant) => {
-                  const locationRecord = await prisma.location.findUnique({
-                    where: {
-                      id: restaurant.locationId,
-                    },
-                  });
-
-                  const location = locationRecord?.name || 'Unknown Location';
+                  let location = 'Unknown Location';
+                  if (restaurant.locationId) {
+                    const locationRecord = await prisma.location.findUnique({
+                      where: {
+                        id: restaurant.locationId,
+                      },
+                    });
+                    if (locationRecord?.name) {
+                      location = locationRecord?.name;
+                    }
+                  }
 
                   return (
                     <RestaurantItemAdmin

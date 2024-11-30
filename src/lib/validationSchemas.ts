@@ -7,6 +7,19 @@ export const AddStuffSchema = Yup.object({
   owner: Yup.string().required(),
 });
 
+export const AddRestaurantSchema = Yup.object({
+  name: Yup.string().required(),
+  website: Yup.string().url().optional(),
+  phone: Yup.string().optional(),
+  menuLink: Yup.string().url().optional(),
+  onlineOrderLink: Yup.string().url().optional(),
+  image: Yup.string().optional(),
+  latitude: Yup.number().optional(),
+  longitude: Yup.number().optional(),
+  postedById: Yup.number().required(),
+  locationId: Yup.number().optional(),
+});
+
 export const EditStuffSchema = Yup.object({
   id: Yup.number().required(),
   name: Yup.string().required(),
