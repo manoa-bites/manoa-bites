@@ -99,13 +99,13 @@ export async function addRestaurant(data: {
   redirect('/admin');
 }
 
-export async function getRestaurantImageById(restaurantId:number){
+export async function getRestaurantImageById(restaurantId: number) {
   const restaurant = await prisma.restaurant.findUnique({
-    where:{
-      id:restaurantId
-    }
-  })
-  return restaurant?.image
+    where: {
+      id: restaurantId,
+    },
+  });
+  return restaurant?.image;
 }
 
 /**

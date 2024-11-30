@@ -1,13 +1,13 @@
 import { NextApiRequest } from 'next';
 import { getRestaurantImageById } from '@/lib/dbActions';
 
-export const GET = async (
+const GET = async (
   req: NextApiRequest,
   { params }: { params: { restaurantId: string } },
 ) => {
   const { restaurantId } = params;
 
-  const base64Image = await getRestaurantImageById(parseInt(restaurantId));
+  const base64Image = await getRestaurantImageById(Number(restaurantId));
 
   if (!base64Image) {
     console.log('No image found');
@@ -36,3 +36,5 @@ export const GET = async (
     );
   }
 };
+
+export default GET;

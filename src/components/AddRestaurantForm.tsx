@@ -124,7 +124,7 @@ const AddRestaurantForm: React.FC<Props> = ({ currentUserId, locations }) => {
                   <input
                     type="file"
                     onChange={handleImageChange}
-                    className={`form-control`}
+                    className="form-control"
                   />
                 </Form.Group>
                 <Form.Group>
