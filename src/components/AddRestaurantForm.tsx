@@ -43,8 +43,7 @@ const onSubmit = async (data: {
   });
 };
 
-const AddRestaurantForm: React.FC<Props> = (props) => {
-  const { currentUserId, locations } = props;
+const AddRestaurantForm: React.FC<Props> = ({ currentUserId, locations }) => {
   const session = useSession();
   const {
     register,
