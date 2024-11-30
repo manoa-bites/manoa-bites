@@ -3,8 +3,9 @@ import { Col, Container, Row, Table } from 'react-bootstrap';
 import { prisma } from '@/lib/prisma';
 import { adminVendorProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
-import { Restaurant } from '@prisma/client';
+import { Restaurant, Location } from '@prisma/client';
 import RestaurantItemAdmin from '@/components/RestaurantItemAdmin';
+import LocationItemAdmin from '@/components/LocationItemAdmin';
 
 const AdminPage = async () => {
   const session = await getServerSession(authOptions);
@@ -42,14 +43,20 @@ const AdminPage = async () => {
     return ret;
   };
 
+  const getLocations = async (): Promise<Location[]> => {
+    const ret = await prisma.location.findMany({});
+    return ret;
+  };
+
   const restaurants: Restaurant[] = await getRestaurants();
+  const locations: Location[] = await getLocations();
 
   return (
     <main>
       <Container id="list" fluid className="py-3">
         <Row>
           <Col>
-            <h1>List Stuff Admin</h1>
+            <h1>List Restaurants {role}</h1>
             <Table striped bordered hover>
               <thead>
                 <tr>
@@ -87,11 +94,39 @@ const AdminPage = async () => {
             </Table>
           </Col>
         </Row>
+
+        {role === 'ADMIN' ? (
+          <main>
+            <Row>
+              <Col>
+                <h1>List Locations {role}</h1>
+                <Table striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {locations.map(async (location) => {
+                      return (
+                        <LocationItemAdmin
+                          id={location.id}
+                          name={location.name}
+                        />
+                      );
+                    })}
+                  </tbody>
+                </Table>
+              </Col>
+            </Row>
+          </main>
+        ) : null}
         {currentUserEmail && role === 'ADMIN' ? (
           <div>
             <Row>
               <Col>
-                <h1>List Users Admin</h1>
+                <h1>List Users {role}</h1>
                 <Table striped bordered hover>
                   <thead>
                     <tr>

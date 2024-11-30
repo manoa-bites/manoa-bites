@@ -68,6 +68,11 @@ export async function deleteStuff(id: number) {
   redirect('/list');
 }
 
+export async function addLocation(data: { name: string }) {
+  await prisma.location.create({ data: { name: data.name } });
+  redirect('/admin');
+}
+
 export async function addRestaurant(data: {
   name: string;
   website?: string;

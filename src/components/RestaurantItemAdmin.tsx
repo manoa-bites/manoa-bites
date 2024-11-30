@@ -16,7 +16,7 @@ const RestaurantItemAdmin = ({
     <td>{location}</td>
     <td>{postedby}</td>
     <td>
-      <a href={`/edit/${id}`}>Edit</a>
+      <a href={`/admin/restaurant/edit/${id}`}>Edit</a>
     </td>
   </tr>
 );

@@ -20,6 +20,11 @@ export const AddRestaurantSchema = Yup.object({
   locationId: Yup.number().optional(),
 });
 
+export const AddLocationSchema = Yup.object({
+  name: Yup.string().required(),
+});
+
+
 export const EditStuffSchema = Yup.object({
   id: Yup.number().required(),
   name: Yup.string().required(),
