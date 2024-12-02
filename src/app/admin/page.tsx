@@ -55,7 +55,7 @@ const AdminPage = async () => {
   const issues = await prisma.issue.findMany();
   return (
     <main>
-      <Container id="list" fluid className="py-3">
+      <Container id="list" className="py-3">
         <Row>
           <Col>
             <h1>{`List Restaurants ${role}`}</h1>
