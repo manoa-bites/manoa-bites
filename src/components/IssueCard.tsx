@@ -1,7 +1,7 @@
 'use client';
 
 import { Issue } from '@prisma/client';
-import { Card } from 'react-bootstrap/';
+import { Card, ListGroup } from 'react-bootstrap/';
 
 const IssueCard = ({ issue }: { issue : Issue }) => (
   <main>
@@ -13,15 +13,23 @@ const IssueCard = ({ issue }: { issue : Issue }) => (
           {issue.topic}
         </Card.Title>
         <Card.Subtitle>
-          Name:
-          {' '}
-          {issue.name || 'Anonymous'}
-          Contact Info:
-          {' '}
-          {issue.contactinfo && ` (${issue.contactinfo})`}
-          Description:
-          {' '}
-          {issue.description}
+          <ListGroup variant="flush">
+            <ListGroup.Item>
+              Name:
+              {' '}
+              {issue.name || 'Anonymous'}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              Contact Info:
+              {' '}
+              {issue.contactinfo || 'Not Provided'}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              Description:
+              {' '}
+              {issue.description}
+            </ListGroup.Item>
+          </ListGroup>
         </Card.Subtitle>
       </Card.Header>
       <Card.Footer>
