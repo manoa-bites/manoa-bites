@@ -9,15 +9,24 @@ const IssueCard = ({ issue }: { issue : Issue }) => (
       <Card.Header>
         <Card.Title>
           Topic:
+          {' '}
           {issue.topic}
         </Card.Title>
         <Card.Subtitle>
+          Name:
+          {' '}
           {issue.name || 'Anonymous'}
+          Contact Info:
+          {' '}
           {issue.contactinfo && ` (${issue.contactinfo})`}
+          Description:
+          {' '}
           {issue.description}
         </Card.Subtitle>
       </Card.Header>
       <Card.Footer>
+        Date Reported:
+        {' '}
         {issue.createdAt.toLocaleDateString('en-US')}
       </Card.Footer>
     </Card>
