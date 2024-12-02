@@ -1,11 +1,12 @@
 import { getServerSession } from 'next-auth';
-import { Col, Container, Row, Table } from 'react-bootstrap';
+import { Button, Col, Container, Row, Table } from 'react-bootstrap';
 import { prisma } from '@/lib/prisma';
 import { adminVendorProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
 import { Restaurant, Location } from '@prisma/client';
 import RestaurantItemAdmin from '@/components/RestaurantItemAdmin';
 import LocationItemAdmin from '@/components/LocationItemAdmin';
+import { PlusCircleFill } from 'react-bootstrap-icons';
 
 const AdminPage = async () => {
   const session = await getServerSession(authOptions);
@@ -56,10 +57,12 @@ const AdminPage = async () => {
       <Container id="list" fluid className="py-3">
         <Row>
           <Col>
-            <h1>
-              List Restaurants
-              {role}
-            </h1>
+            <h1>{`List Restaurants ${role}`}</h1>
+            <Button variant="success" className="mb-3" href="/admin/restaurant/add">
+              Add Restaurant
+              {' '}
+              <PlusCircleFill />
+            </Button>
             <Table striped bordered hover>
               <thead>
                 <tr>
@@ -102,10 +105,12 @@ const AdminPage = async () => {
           <main>
             <Row>
               <Col>
-                <h1>
-                  List Locations
-                  {role}
-                </h1>
+                <h1>{`List Restaurants ${role}`}</h1>
+                <Button variant="success" className="mb-3" href="/admin/location/add">
+                  Add Location
+                  {' '}
+                  <PlusCircleFill />
+                </Button>
                 <Table striped bordered hover>
                   <thead>
                     <tr>
