@@ -168,8 +168,6 @@ const AdminPage = async () => {
                 </Table>
               </Col>
             </Row>
-<<<<<<< Updated upstream
-=======
             <Row>
               <Col><h1 className="text-center">Reported Problems</h1></Col>
               <Row xs={1} md={2} lg={3} className="g-4">
@@ -180,7 +178,6 @@ const AdminPage = async () => {
                 </Col>
               </Row>
             </Row>
->>>>>>> Stashed changes
           </div>
         ) : null}
       </Container>
