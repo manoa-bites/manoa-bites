@@ -1,71 +1,94 @@
 'use server';
 
-import { Stuff, Condition, Topic, Role } from '@prisma/client';
+import { Topic, Role } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
 
-/**
- * Adds a new stuff to the database.
- * @param stuff, an object with the following properties: name, quantity, owner, condition.
- */
-export async function addStuff(stuff: {
+export async function addLocation(data: { name: string }) {
+  await prisma.location.create({ data: { name: data.name } });
+  redirect('/admin');
+}
+
+export async function addRestaurant(data: {
   name: string;
-  quantity: number;
-  owner: string;
-  condition: string;
+  website?: string;
+  phone?: string;
+  menuLink?: string;
+  onlineOrderLink?: string;
+  image?: string;
+  latitude?: number;
+  longitude?: number;
+  postedById: number;
+  locationId?: number;
 }) {
-  // console.log(`addStuff data: ${JSON.stringify(stuff, null, 2)}`);
-  let condition: Condition = 'good';
-  if (stuff.condition === 'poor') {
-    condition = 'poor';
-  } else if (stuff.condition === 'excellent') {
-    condition = 'excellent';
-  } else {
-    condition = 'fair';
-  }
-  await prisma.stuff.create({
+  await prisma.restaurant.create({
     data: {
-      name: stuff.name,
-      quantity: stuff.quantity,
-      owner: stuff.owner,
-      condition,
+      name: data.name,
+      website: data.website || null,
+      phone: data.phone || null,
+      menuLink: data.menuLink || null,
+      onlineOrderLink: data.onlineOrderLink || null,
+      image: data.image || null,
+      latitude: data.latitude || null,
+      longitude: data.longitude || null,
+      postedById: data.postedById,
+      locationId: data.locationId || null,
     },
   });
-  // After adding, redirect to the list page
-  redirect('/list');
+
+  // Redirect to the list page after successfully adding the restaurant
+  redirect('/admin');
 }
 
-/**
- * Edits an existing stuff in the database.
- * @param stuff, an object with the following properties: id, name, quantity, owner, condition.
- */
-export async function editStuff(stuff: Stuff) {
-  // console.log(`editStuff data: ${JSON.stringify(stuff, null, 2)}`);
-  await prisma.stuff.update({
-    where: { id: stuff.id },
+export async function editRestaurant(data: {
+  id: number;
+  name: string;
+  website?: string;
+  phone?: string;
+  menuLink?: string;
+  onlineOrderLink?: string;
+  image?: string;
+  latitude?: number;
+  longitude?: number;
+  postedById: number;
+  locationId?: number;
+}) {
+  await prisma.restaurant.update({
+    where: { id: data.id },
     data: {
-      name: stuff.name,
-      quantity: stuff.quantity,
-      owner: stuff.owner,
-      condition: stuff.condition,
+      name: data.name,
+      website: data.website || null,
+      phone: data.phone || null,
+      menuLink: data.menuLink || null,
+      onlineOrderLink: data.onlineOrderLink || null,
+      image: data.image || null,
+      latitude: data.latitude || null,
+      longitude: data.longitude || null,
+      postedById: data.postedById,
+      locationId: data.locationId || null,
     },
   });
-  // After updating, redirect to the list page
-  redirect('/list');
+
+  // Redirect to the list page after successfully adding the restaurant
+  redirect('/admin');
 }
 
-/**
- * Deletes an existing stuff from the database.
- * @param id, the id of the stuff to delete.
- */
-export async function deleteStuff(id: number) {
-  // console.log(`deleteStuff id: ${id}`);
-  await prisma.stuff.delete({
-    where: { id },
+export async function deleteRestaurant(data: { id: number }) {
+  await prisma.restaurant.deleteMany({
+    where: { id: data.id },
   });
-  // After deleting, redirect to the list page
-  redirect('/list');
+
+  redirect('/admin');
+}
+
+export async function getRestaurantImageById(restaurantId: number) {
+  const restaurant = await prisma.restaurant.findUnique({
+    where: {
+      id: restaurantId,
+    },
+  });
+  return restaurant?.image;
 }
 
 /**
