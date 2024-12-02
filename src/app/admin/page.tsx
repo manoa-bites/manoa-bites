@@ -58,7 +58,11 @@ const AdminPage = async () => {
         <Row>
           <Col>
             <h1>{`List Restaurants ${role}`}</h1>
-            <Button variant="success" className="mb-3" href="/admin/restaurant/add">
+            <Button
+              variant="success"
+              className="mb-3"
+              href="/admin/restaurant/add"
+            >
               Add Restaurant
               {' '}
               <PlusCircleFill />
@@ -66,6 +70,8 @@ const AdminPage = async () => {
             <Table striped bordered hover>
               <thead>
                 <tr>
+                  <th>ID</th>
+
                   <th>Name</th>
                   <th>Location</th>
                   <th>Posted By</th>
@@ -106,7 +112,11 @@ const AdminPage = async () => {
             <Row>
               <Col>
                 <h1>{`List Restaurants ${role}`}</h1>
-                <Button variant="success" className="mb-3" href="/admin/location/add">
+                <Button
+                  variant="success"
+                  className="mb-3"
+                  href="/admin/location/add"
+                >
                   Add Location
                   {' '}
                   <PlusCircleFill />

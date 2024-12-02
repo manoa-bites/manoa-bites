@@ -104,6 +104,39 @@ export async function addRestaurant(data: {
   redirect('/admin');
 }
 
+export async function editRestaurant(data: {
+  id: number;
+  name: string;
+  website?: string;
+  phone?: string;
+  menuLink?: string;
+  onlineOrderLink?: string;
+  image?: string;
+  latitude?: number;
+  longitude?: number;
+  postedById: number;
+  locationId?: number;
+}) {
+  await prisma.restaurant.update({
+    where: { id: data.id },
+    data: {
+      name: data.name,
+      website: data.website || null,
+      phone: data.phone || null,
+      menuLink: data.menuLink || null,
+      onlineOrderLink: data.onlineOrderLink || null,
+      image: data.image || null,
+      latitude: data.latitude || null,
+      longitude: data.longitude || null,
+      postedById: data.postedById,
+      locationId: data.locationId || null,
+    },
+  });
+
+  // Redirect to the list page after successfully adding the restaurant
+  redirect('/admin');
+}
+
 export async function getRestaurantImageById(restaurantId: number) {
   const restaurant = await prisma.restaurant.findUnique({
     where: {

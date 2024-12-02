@@ -12,6 +12,7 @@ const RestaurantItemAdmin = ({
   id,
 }: RestaurantItemProp) => (
   <tr>
+    <td>{id}</td>
     <td>{name}</td>
     <td>{location}</td>
     <td>{postedby}</td>
