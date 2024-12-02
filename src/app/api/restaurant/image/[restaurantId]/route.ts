@@ -1,10 +1,10 @@
 import { NextApiRequest } from 'next';
 import { getRestaurantImageById } from '@/lib/dbActions';
 
-const GET = async (
+export async function GET(
   req: NextApiRequest,
   { params }: { params: { restaurantId: string } },
-) => {
+): Promise<Response> {
   const { restaurantId } = params;
 
   const base64Image = await getRestaurantImageById(Number(restaurantId));
@@ -35,6 +35,28 @@ const GET = async (
       },
     );
   }
-};
+}
 
-export default GET;
+export async function POST(): Promise<Response> {
+  return new Response('Unauthorized', { status: 403 });
+}
+
+export async function PUT(): Promise<Response> {
+  return new Response('Unauthorized', { status: 403 });
+}
+
+export async function DELETE(): Promise<Response> {
+  return new Response('Unauthorized', { status: 403 });
+}
+
+export async function PATCH(): Promise<Response> {
+  return new Response('Unauthorized', { status: 403 });
+}
+
+export async function OPTIONS(): Promise<Response> {
+  return new Response('Unauthorized', { status: 403 });
+}
+
+export async function HEAD(): Promise<Response> {
+  return new Response('Unauthorized', { status: 403 });
+}

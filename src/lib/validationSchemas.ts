@@ -54,4 +54,5 @@ export interface Restaurant {
   phone: string | null;
   menuLink: string | null;
   onlineOrderLink: string | null;
+  image:string | null
 }
