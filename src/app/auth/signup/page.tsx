@@ -57,8 +57,8 @@ const SignUp = () => {
     // Pass the role to the user creation logic
     await createUser({ ...data, role });
 
-    // After creating, sign in with redirect to the add page
-    await signIn('credentials', { callbackUrl: '/add', ...data });
+    // After creating, sign in with redirect to the home page
+    await signIn('credentials', { callbackUrl: 'src/app/page.tsx', ...data });
   };
 
   return (
