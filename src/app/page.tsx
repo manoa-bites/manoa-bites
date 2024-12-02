@@ -23,7 +23,7 @@ const ListPage = async () => {
             <Col>
               <h1 className="text-center">Restaurants at Manoa</h1>
               <Col md={8} className="mx-auto">
-                <SearchBar />
+                <SearchBar initialResults={[]} />
               </Col>
               <Row xs={1} md={2} lg={3} className="g-4">
                 {restaurants.map((restaurant) => (
