@@ -1,8 +1,8 @@
-import { NextApiRequest } from 'next';
+import { NextRequest } from 'next/server';
 import { getRestaurantImageById } from '@/lib/dbActions';
 
 export async function GET(
-  req: NextApiRequest,
+  req: NextRequest,
   { params }: { params: { restaurantId: string } },
 ): Promise<Response> {
   const { restaurantId } = params;
@@ -28,8 +28,9 @@ export async function GET(
       },
     });
   } catch (e) {
+    console.error('Error decoding base64 image:', e);
     return new Response(
-      'Uh uh, something went wrong decoding the base64 image.',
+      'Uh oh, something went wrong decoding the base64 image.',
       {
         status: 500,
       },
