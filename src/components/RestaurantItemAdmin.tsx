@@ -12,11 +12,14 @@ const RestaurantItemAdmin = ({
   id,
 }: RestaurantItemProp) => (
   <tr>
+    <td>{id}</td>
     <td>{name}</td>
     <td>{location}</td>
     <td>{postedby}</td>
     <td>
-      <a href={`/edit/${id}`}>Edit</a>
+      <a href={`/admin/restaurant/edit/${id}`}>Edit</a>
+      {' '}
+      <a href={`/admin/restaurant/delete/${id}`}>Delete</a>
     </td>
   </tr>
 );

@@ -1,7 +1,7 @@
 'use client';
 
 import { Restaurant } from '@/lib/validationSchemas';
-import { Card, ListGroup, Button } from 'react-bootstrap/';
+import { Card, ListGroup, Button, Image } from 'react-bootstrap/';
 import { Heart, HeartFill } from 'react-bootstrap-icons';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
@@ -16,6 +16,8 @@ import LoadingSpinner from './LoadingSpinner';
 const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
   const { data: session } = useSession();
   const currentUserEmail = session?.user?.email as string;
+
+  const [isImageAvailable, setIsImageAvailable] = useState(false);
 
   const [isFavorited, setIsFavorited] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -40,6 +42,24 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
       setLoading(false);
     }
   }, [currentUserEmail, restaurant.id, session]);
+
+  useEffect(() => {
+    const checkImage = async () => {
+      try {
+        const response = await fetch(`/api/restaurant/image/${restaurant.id}`);
+        if (response.status === 200) {
+          setIsImageAvailable(true);
+        } else {
+          setIsImageAvailable(false);
+        }
+      } catch (error) {
+        console.error('Error checking image availability:', error);
+        setIsImageAvailable(false);
+      }
+    };
+
+    checkImage();
+  }, [restaurant.id]);
 
   const handleAddFavorite = async () => {
     if (!session) {
@@ -94,6 +114,16 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
         </Card.Header>
         <Card.Body>
           <ListGroup variant="flush">
+            {isImageAvailable ? (
+              <main>
+                <Image
+                  src={`/api/restaurant/image/${restaurant.id}`}
+                  alt={`${restaurant.name} image`}
+                  width="100%"
+                  height="100%"
+                />
+              </main>
+            ) : null}
             <ListGroup.Item>
               Phone:
               {restaurant.phone || 'Not Available'}
