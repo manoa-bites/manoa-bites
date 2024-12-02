@@ -56,7 +56,7 @@ export const IssueSchema = Yup.object({
 
 export interface Restaurant {
   id: number;
-  locationId: number;
+  locationId: number | null;
   postedById: number;
   name: string;
   website: string | null;
