@@ -1,12 +1,19 @@
 'use client';
 
-import { useMemo } from 'react';
-import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
+import { useMemo, useState, ReactElement } from 'react';
+import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 
-function Map() {
+type Location = {
+  lat: number;
+  lng: number;
+  name: string;
+};
+
+function Map(): ReactElement {
   const center = useMemo(() => ({ lat: 21.29980545928421, lng: -157.81515541975028 }), []);
+  const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
 
-  const foodLocations = [
+  const foodLocations: Location[] = [
     { lat: 21.29879998397199, lng: -157.81968899784732, name: 'Sushi Paradise' },
     { lat: 21.2982044679266, lng: -157.81876971645244, name: 'Taco Town' },
     { lat: 21.298008165606237, lng: -157.81863202473562, name: 'Dragon Noodles' },
@@ -21,14 +28,31 @@ function Map() {
         <Marker
           key={location.name}
           position={{ lat: location.lat, lng: location.lng }}
+          onClick={() => setSelectedLocation(location)}
           label={location.name}
         />
       ))}
+
+      {selectedLocation && (
+        <InfoWindow
+          position={{ lat: selectedLocation.lat, lng: selectedLocation.lng }}
+          onCloseClick={() => setSelectedLocation(null)}
+        >
+          <div>
+            <h2>{selectedLocation.name}</h2>
+            <p>
+              Description or details about
+              <br />
+              {selectedLocation.name}
+            </p>
+          </div>
+        </InfoWindow>
+      )}
     </GoogleMap>
   );
 }
 
-export default function Home() {
+export default function Home(): ReactElement {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
   });
