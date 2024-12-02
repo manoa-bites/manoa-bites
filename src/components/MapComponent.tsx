@@ -63,7 +63,7 @@ function Map(): ReactElement {
           icon={{
             url: '/redLocationIcon2.png',
             scaledSize: new window.google.maps.Size(40, 40),
-            labelOrigin: new google.maps.Point(20, 50)  // Horizontally centered, vertically just below the icon
+            labelOrigin: new google.maps.Point(20, 50), // Horizontally centered, vertically just below the icon
 
           }}
           label={{
