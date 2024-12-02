@@ -4,9 +4,9 @@ import { Restaurant } from '@prisma/client';
 import authOptions from '@/lib/authOptions';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import { prisma } from '@/lib/prisma';
-import EditRestaurantForm from '@/components/EditRestaurantForm';
+import DeleteRestaurantForm from '@/components/DeleteRestauantForm';
 
-export default async function EditRestaurant({
+export default async function DeleteRestaurant({
   params,
 }: {
   params: { restaurantId: string | string[] };
@@ -49,7 +49,7 @@ export default async function EditRestaurant({
     <main>
       {currentUserId ? (
         <main>
-          <EditRestaurantForm
+          <DeleteRestaurantForm
             restaurant={{ ...restaurant }}
             locations={locations}
             currentUserId={currentUserId}

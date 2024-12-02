@@ -74,6 +74,14 @@ export async function editRestaurant(data: {
   redirect('/admin');
 }
 
+export async function deleteRestaurant(data: { id: number }) {
+  await prisma.restaurant.deleteMany({
+    where: { id: data.id },
+  });
+
+  redirect('/admin');
+}
+
 export async function getRestaurantImageById(restaurantId: number) {
   const restaurant = await prisma.restaurant.findUnique({
     where: {

@@ -18,6 +18,8 @@ const RestaurantItemAdmin = ({
     <td>{postedby}</td>
     <td>
       <a href={`/admin/restaurant/edit/${id}`}>Edit</a>
+      {' '}
+      <a href={`/admin/restaurant/delete/${id}`}>Delete</a>
     </td>
   </tr>
 );
