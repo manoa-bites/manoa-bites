@@ -3,10 +3,11 @@ import { Button, Col, Container, Row, Table } from 'react-bootstrap';
 import { prisma } from '@/lib/prisma';
 import { adminVendorProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
-import { Restaurant, Location } from '@prisma/client';
+import { Restaurant, Locationg } from '@prisma/client';
 import RestaurantItemAdmin from '@/components/RestaurantItemAdmin';
 import LocationItemAdmin from '@/components/LocationItemAdmin';
 import { PlusCircleFill } from 'react-bootstrap-icons';
+import IssueCard from '@/components/IssueCard';
 
 const AdminPage = async () => {
   const session = await getServerSession(authOptions);
@@ -51,7 +52,7 @@ const AdminPage = async () => {
 
   const restaurants: Restaurant[] = await getRestaurants();
   const locations: Location[] = await getLocations();
-
+  const issues = await prisma.issue.findMany();
   return (
     <main>
       <Container id="list" fluid className="py-3">
@@ -165,6 +166,16 @@ const AdminPage = async () => {
                     ))}
                   </tbody>
                 </Table>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <h1>Issues List</h1>
+                <div className="d-flex flex-wrap">
+                  {issues.map((issue) => (
+                    <IssueCard key={issue.id} issue={issue} />
+                  ))}
+                </div>
               </Col>
             </Row>
           </div>
