@@ -3,7 +3,7 @@ import { Button, Col, Container, Row, Table } from 'react-bootstrap';
 import { prisma } from '@/lib/prisma';
 import { adminVendorProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
-import { Restaurant, Locationg } from '@prisma/client';
+import { Restaurant, Location } from '@prisma/client';
 import RestaurantItemAdmin from '@/components/RestaurantItemAdmin';
 import LocationItemAdmin from '@/components/LocationItemAdmin';
 import { PlusCircleFill } from 'react-bootstrap-icons';
