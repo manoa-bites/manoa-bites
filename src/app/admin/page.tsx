@@ -169,14 +169,16 @@ const AdminPage = async () => {
               </Col>
             </Row>
             <Row>
-              <Col><h1 className="text-center">Reported Problems</h1></Col>
-              <Row xs={1} md={2} lg={3} className="g-4">
-                <Col>
+              <Col>
+                <h1 className="text-center">Reported Problems</h1>
+                <Row xs={1} md={2} lg={3} className="g-4">
                   {issues.map((issue) => (
-                    <IssueCard key={issue.id} issue={issue} />
+                    <Col key={issue.topic}>
+                      <IssueCard issue={issue} />
+                    </Col>
                   ))}
-                </Col>
-              </Row>
+                </Row>
+              </Col>
             </Row>
           </div>
         ) : null}
