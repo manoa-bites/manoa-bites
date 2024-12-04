@@ -1,4 +1,4 @@
-name: ci-nextjs-application-template
+name: manoabites-application-template
 on:
   push:
     branches: [main, master]
