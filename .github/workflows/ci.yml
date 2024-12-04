@@ -1,4 +1,4 @@
-name: manoabites-application-template
+name: ci-manoabites
 on:
   push:
     branches: [main, master]
