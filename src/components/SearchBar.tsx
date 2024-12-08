@@ -1,45 +1,54 @@
 'use client';
 
+// Ensure this is a client-side component
+
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
+import SearchResults from './SearchServer';
 
-const SearchBar = ({ initialResults }: { initialResults: any[] }) => {
-  const [results, setResults] = useState(initialResults);
+const SearchBar = () => {
   const [query, setQuery] = useState('');
+  const [submittedQuery, setSubmittedQuery] = useState('');
 
   const handleSearch = () => {
-    if (query.trim().length > 0) {
-      // eslint-disable-next-line max-len
-      const filteredResults = initialResults.filter((restaurant) => restaurant.name.toLowerCase().includes(query.toLowerCase()));
-      setResults(filteredResults);
-    } else {
-      setResults(initialResults); // Reset to initial results if the query is empty
-    }
+    setSubmittedQuery(query);
   };
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search restaurants..."
-          className="search-input"
-          style={{ padding: '8px', flex: 1, marginRight: '8px' }}
+          style={{
+            flex: 1,
+            padding: '10px',
+            fontSize: '16px',
+            borderRadius: '4px',
+            border: '1px solid #ccc',
+            marginRight: '8px',
+          }}
         />
-        <Button onClick={handleSearch} className="search-button" style={{ padding: '8px 16px' }}>
+        <Button
+          onClick={handleSearch}
+          style={{
+            padding: '10px 16px',
+            fontSize: '16px',
+            backgroundColor: '#0070f3',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+          }}
+        >
           Search
         </Button>
       </div>
 
-      <ul>
-        {results.length > 0 ? (
-          results.map((restaurant) => <li key={restaurant.id}>{restaurant.name}</li>)
-        ) : (
-          <li>No results found</li>
-        )}
-      </ul>
+      {/* Render server-side results */}
+      {submittedQuery && <SearchResults query={submittedQuery} />}
     </div>
   );
 };
