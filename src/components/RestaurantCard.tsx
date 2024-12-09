@@ -101,7 +101,9 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
     <main>
       <Card className="h-100 mb-3">
         <Card.Header>
-          <Card.Title>{restaurant.name}</Card.Title>
+          <Link href={`/restaurant/${restaurant.id}`} className="link-dark">
+            <Card.Title>{restaurant.name}</Card.Title>
+          </Link>
           <Card.Subtitle>
             <Link
               href={restaurant.website || '#'}

@@ -5,16 +5,7 @@ import SearchBar from '@/components/SearchBar';
 
 /** Renders a list of restuarants for the directory page. */
 const ListPage = async () => {
-  // Protect the page, only logged in users can access it.
-  // const session = await getServerSession(authOptions);
-  // loggedInProtectedPage(
-  //   session as {
-  //     user: { email: string; id: string; randomKey: string };
-  //     // eslint-disable-next-line @typescript-eslint/comma-dangle
-  //   } | null,
-  // );
   const restaurants = await prisma.restaurant.findMany();
-  // console.log(stuff);
   return (
     <main>
       <Container id="list" fluid className="py-3">
