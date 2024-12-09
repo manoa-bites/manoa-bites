@@ -46,8 +46,9 @@ model Stuff {
 }
 
 model Location {
-  id   Int    @id @default(autoincrement())
-  name String @unique
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  restaurants Restaurant[]  // One-to-many relation: a location can have many restaurants
 }
 
 model Restaurant {
@@ -62,6 +63,7 @@ model Restaurant {
   image           String?
   latitude        Decimal?
   longitude       Decimal?
+  location        Location?   @relation(fields: [locationId], references: [id]) // Relation setup
 }
 
 model FavoriteRestaurant {

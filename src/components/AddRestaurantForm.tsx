@@ -189,6 +189,7 @@ const AddRestaurantForm: React.FC<Props> = ({ currentUserId, locations }) => {
                   <Form.Label>Latitude</Form.Label>
                   <input
                     type="number"
+                    step="0.000001" // Allows up to 6 decimal places
                     {...register('latitude')}
                     className={`form-control ${errors.latitude ? 'is-invalid' : ''}`}
                   />
@@ -200,6 +201,7 @@ const AddRestaurantForm: React.FC<Props> = ({ currentUserId, locations }) => {
                   <Form.Label>Longitude</Form.Label>
                   <input
                     type="number"
+                    step="0.000001" // Allows up to 6 decimal places
                     {...register('longitude')}
                     className={`form-control ${errors.longitude ? 'is-invalid' : ''}`}
                   />
