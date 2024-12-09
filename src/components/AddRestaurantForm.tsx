@@ -111,6 +111,7 @@ const AddRestaurantForm: React.FC<Props> = ({ currentUserId, locations }) => {
                     {...register('locationId')}
                     className={`form-control ${errors.locationId ? 'is-invalid' : ''}`}
                   >
+                    <option value={-1}>No location selected</option>
                     {locations.map((location) => (
                       <option value={location.id}>{location.name}</option>
                     ))}
