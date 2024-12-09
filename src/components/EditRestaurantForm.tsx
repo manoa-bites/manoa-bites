@@ -129,6 +129,7 @@ const EditRestaurantForm: React.FC<Props> = ({
                       )?.id || ''
                     }
                   >
+                    <option value={-1}>No location selected</option>
                     {locations.map((location) => (
                       <option key={location.id} value={location.id}>
                         {location.name}
