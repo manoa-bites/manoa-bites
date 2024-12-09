@@ -28,7 +28,7 @@ const RestaurantPage = async ({ params }: RestaurantPageProps) => {
   if (!restaurant) {
     return (
       <Container className="justify-content-center p-4 d-flex">
-        <h2>404, Restaurant not found!</h2>{' '}
+        <h2>404, Restaurant not found!</h2>
       </Container>
     );
   }
