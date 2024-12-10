@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Col, Row } from 'react-bootstrap';
 import { Restaurant } from '@prisma/client';
-import { Restaurant } from '@prisma/client';
 import RestaurantCard from './RestaurantCard';
 
 type SearchRestaurantsProps = {
