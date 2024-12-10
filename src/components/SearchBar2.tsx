@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import { Form, Button, Container, Col, Row } from 'react-bootstrap';
-import RestaurantCard from './RestaurantCard';
 import { Restaurant } from '@prisma/client';
+import RestaurantCard from './RestaurantCard';
 
 type SearchRestaurantsProps = {
   initialRestaurants: Restaurant[];
@@ -23,7 +23,11 @@ const SearchRestaurants: React.FC<SearchRestaurantsProps> = ({ initialRestaurant
 
     switch (sortOption) {
       case 'location-asc':
-        filteredResults.sort((a, b) => a.locationId - b.locationId);
+        filteredResults.sort((a, b) => {
+          if (a.locationId === null) return 1; // Place nulls at the end
+          if (b.locationId === null) return -1; // Place nulls at the end
+          return a.locationId - b.locationId;
+        });
         break;
       case 'name-asc':
         filteredResults.sort((a, b) => a.name.localeCompare(b.name));
