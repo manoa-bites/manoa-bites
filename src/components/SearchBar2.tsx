@@ -3,8 +3,13 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Col, Row } from 'react-bootstrap';
 import RestaurantCard from './RestaurantCard';
+import { Restaurant } from '@prisma/client';
 
-const SearchRestaurants = ({ initialRestaurants }) => {
+type SearchRestaurantsProps = {
+  initialRestaurants: Restaurant[];
+};
+
+const SearchRestaurants: React.FC<SearchRestaurantsProps> = ({ initialRestaurants }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOption, setSortOption] = useState('');
   const [results, setResults] = useState(initialRestaurants);
