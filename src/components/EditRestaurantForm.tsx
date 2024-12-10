@@ -187,6 +187,28 @@ const EditRestaurantForm: React.FC<Props> = ({
                   </div>
                 </Form.Group>
                 <Form.Group>
+                  <Form.Label>Hours</Form.Label>
+                  <input
+                    type="text"
+                    {...register('hours')}
+                    className={`form-control ${errors.hours ? 'is-invalid' : ''}`}
+                  />
+                  <div className="invalid-feedback">
+                    {errors.hours?.message}
+                  </div>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Description</Form.Label>
+                  <input
+                    type="text"
+                    {...register('description')}
+                    className={`form-control ${errors.description ? 'is-invalid' : ''}`}
+                  />
+                  <div className="invalid-feedback">
+                    {errors.description?.message}
+                  </div>
+                </Form.Group>
+                <Form.Group>
                   <Form.Label>Menu Link</Form.Label>
                   <input
                     type="text"
