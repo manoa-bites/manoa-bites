@@ -14,6 +14,8 @@ export async function addRestaurant(data: {
   name: string;
   website?: string;
   phone?: string;
+  hours?: string;
+  description?: string;
   menuLink?: string;
   onlineOrderLink?: string;
   image?: string;
@@ -27,6 +29,8 @@ export async function addRestaurant(data: {
       name: data.name,
       website: data.website || null,
       phone: data.phone || null,
+      hours: data.hours || null,
+      description: data.description || null,
       menuLink: data.menuLink || null,
       onlineOrderLink: data.onlineOrderLink || null,
       image: data.image || null,
@@ -46,6 +50,8 @@ export async function editRestaurant(data: {
   name: string;
   website?: string;
   phone?: string;
+  hours?: string;
+  description?: string;
   menuLink?: string;
   onlineOrderLink?: string;
   image?: string;
@@ -60,6 +66,8 @@ export async function editRestaurant(data: {
       name: data.name,
       website: data.website || null,
       phone: data.phone || null,
+      hours: data.hours || null,
+      description: data.description || null,
       menuLink: data.menuLink || null,
       onlineOrderLink: data.onlineOrderLink || null,
       image: data.image || null,

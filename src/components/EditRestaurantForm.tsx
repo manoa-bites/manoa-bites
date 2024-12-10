@@ -57,6 +57,8 @@ const EditRestaurantForm: React.FC<Props> = ({
     name: string;
     website?: string;
     phone?: string;
+    hours?: string;
+    description?: string;
     menuLink?: string;
     onlineOrderLink?: string;
     latitude?: number;

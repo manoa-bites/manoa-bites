@@ -52,6 +52,8 @@ const AddRestaurantForm: React.FC<Props> = ({ currentUserId, locations }) => {
     name: string;
     website?: string;
     phone?: string;
+    hours?: string;
+    description?: string;
     menuLink?: string;
     onlineOrderLink?: string;
     latitude?: number;
@@ -160,7 +162,29 @@ const AddRestaurantForm: React.FC<Props> = ({ currentUserId, locations }) => {
                     className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
                   />
                   <div className="invalid-feedback">
-                    {errors.website?.message}
+                    {errors.phone?.message}
+                  </div>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Hours</Form.Label>
+                  <input
+                    type="text"
+                    {...register('hours')}
+                    className={`form-control ${errors.hours ? 'is-invalid' : ''}`}
+                  />
+                  <div className="invalid-feedback">
+                    {errors.hours?.message}
+                  </div>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Description</Form.Label>
+                  <input
+                    type="text"
+                    {...register('description')}
+                    className={`form-control ${errors.description ? 'is-invalid' : ''}`}
+                  />
+                  <div className="invalid-feedback">
+                    {errors.description?.message}
                   </div>
                 </Form.Group>
                 <Form.Group>

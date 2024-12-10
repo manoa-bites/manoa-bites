@@ -128,7 +128,18 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
             ) : null}
             <ListGroup.Item>
               Phone:
+              {' '}
               {restaurant.phone || 'Not Available'}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              Hours:
+              {' '}
+              {restaurant.hours || 'Not Available'}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              Description:
+              {' '}
+              {restaurant.description || 'Not Available'}
             </ListGroup.Item>
             <ListGroup.Item>
               <Link

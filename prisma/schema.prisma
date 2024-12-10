@@ -57,6 +57,8 @@ model Restaurant {
   name            String      @unique
   website         String?
   phone           String?
+  hours           String?
+  description     String?
   menuLink        String?
   onlineOrderLink String?
   image           String?

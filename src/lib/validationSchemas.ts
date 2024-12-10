@@ -61,6 +61,8 @@ export interface Restaurant {
   name: string;
   website: string | null;
   phone: string | null;
+  hours: string | null;
+  description: string | null;
   menuLink: string | null;
   onlineOrderLink: string | null;
   image:string | null
