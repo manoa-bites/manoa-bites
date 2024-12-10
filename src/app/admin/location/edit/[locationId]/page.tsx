@@ -1,15 +1,10 @@
+import { getServerSession } from 'next-auth';
 import { notFound } from 'next/navigation';
-import { prisma } from '@/lib/prisma';
-import EditLocationForm from '@/components/EditLocationForm';
+import { Location } from '@prisma/client';
 import authOptions from '@/lib/authOptions';
 import { loggedInProtectedPage } from '@/lib/page-protection';
-import { getServerSession } from 'next-auth';
-
-// Define the expected type
-type LocationType = {
-  id: number;
-  name: string;
-};
+import { prisma } from '@/lib/prisma';
+import EditLocationForm from '@/components/EditLocationForm';
 
 export default async function EditLocation({
   params,
@@ -26,7 +21,7 @@ export default async function EditLocation({
 
   const id = Number(params.locationId);
 
-  const location: LocationType | null = await prisma.location.findUnique({
+  const location: Location | null = await prisma.location.findUnique({
     where: { id },
   });
 
@@ -34,14 +29,6 @@ export default async function EditLocation({
     return notFound();
   }
 
-  const currentUserEmail = session?.user?.email as string;
-  const currentUser = await prisma.user.findUnique({
-    where: {
-      email: currentUserEmail,
-    },
-  });
-
-  const currentUserId = currentUser?.id;
   const userWithRole = session?.user as { email: string; randomKey: string };
   const role = userWithRole?.randomKey;
 
@@ -51,13 +38,10 @@ export default async function EditLocation({
 
   return (
     <main>
-      {currentUserId ? (
-        <EditLocationForm
-          location={location}
-        />
-      ) : (
-        <div>Not logged in</div>
-      )}
+      <EditLocationForm
+        id={location.id}
+        name={location.name}
+      />
     </main>
   );
 }

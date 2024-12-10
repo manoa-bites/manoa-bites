@@ -7,26 +7,25 @@ import { Button, Card, Form, Col, Row } from 'react-bootstrap';
 import swal from 'sweetalert';
 import { EditLocationSchema } from '@/lib/validationSchemas';
 import { editLocation } from '@/lib/dbActions';
-import { Location } from '@prisma/client';
 
 // Define props type
 type Props = {
-  location: Location;
+  id: number;
+  name: string;
 };
 
-const EditLocationForm: React.FC<Props> = ({ location }) => {
+const EditLocationForm: React.FC<Props> = ({ id, name }) => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: yupResolver(EditLocationSchema),
     defaultValues: {
-      name: location.name,
+      name, // Set default value for the form to the passed name
     },
   });
 
-  // Handle form submission
   const onSubmit = async (data: { name: string }) => {
     try {
       await editLocation({
-        id: location.id,
+        id,
         name: data.name,
       });
       swal('Success', 'Location updated successfully', 'success');

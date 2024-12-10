@@ -131,14 +131,7 @@ const AdminPage = async () => {
                   </thead>
                   <tbody>
                     {locations.map(async (location) => (
-<<<<<<< Updated upstream
-                      <LocationItemAdmin
-                        id={location.id}
-                        name={location.name}
-                      />
-=======
                       <LocationItemAdmin key={location.id} name={location.name} id={0} />
->>>>>>> Stashed changes
                     ))}
                   </tbody>
                 </Table>

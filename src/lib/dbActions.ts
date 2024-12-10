@@ -97,6 +97,12 @@ export async function editLocation(data: { id: number; name: string }) {
   });
 }
 
+export async function deleteLocation(data: { id: number }) {
+  await prisma.location.deleteMany({
+    where: { id: data.id },
+  });
+}
+
 export async function getRestaurantImageById(restaurantId: number) {
   const restaurant = await prisma.restaurant.findUnique({
     where: {
