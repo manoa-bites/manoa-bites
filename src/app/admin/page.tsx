@@ -131,10 +131,7 @@ const AdminPage = async () => {
                   </thead>
                   <tbody>
                     {locations.map(async (location) => (
-                      <LocationItemAdmin
-                        id={location.id}
-                        name={location.name}
-                      />
+                      <LocationItemAdmin location={location} />
                     ))}
                   </tbody>
                 </Table>
