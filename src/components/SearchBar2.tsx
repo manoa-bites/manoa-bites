@@ -3,10 +3,20 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Col, Row } from 'react-bootstrap';
 import { Restaurant } from '@prisma/client';
+import { Restaurant } from '@prisma/client';
 import RestaurantCard from './RestaurantCard';
 
 type SearchRestaurantsProps = {
   initialRestaurants: Restaurant[];
+};
+
+// Mapping of location IDs to location names
+const locationNames: Record<number | string, string> = {
+  1: 'Palms Food Court',
+  2: 'Campus Center',
+  3: 'Engineering Courtyard',
+  // Add more mappings as needed
+  Unknown: 'Unknown Location',
 };
 
 const SearchRestaurants: React.FC<SearchRestaurantsProps> = ({ initialRestaurants }) => {
@@ -18,16 +28,13 @@ const SearchRestaurants: React.FC<SearchRestaurantsProps> = ({ initialRestaurant
   const handleSearch = () => {
     setLoading(true);
 
-    const filteredResults = initialRestaurants
-      .filter((restaurant) => restaurant.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    const filteredResults = initialRestaurants.filter(
+      (restaurant) => restaurant.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
 
     switch (sortOption) {
       case 'location-asc':
-        filteredResults.sort((a, b) => {
-          if (a.locationId === null) return 1; // Place nulls at the end
-          if (b.locationId === null) return -1; // Place nulls at the end
-          return a.locationId - b.locationId;
-        });
+        filteredResults.sort((a, b) => a.locationId - b.locationId);
         break;
       case 'name-asc':
         filteredResults.sort((a, b) => a.name.localeCompare(b.name));
@@ -43,6 +50,13 @@ const SearchRestaurants: React.FC<SearchRestaurantsProps> = ({ initialRestaurant
     setLoading(false);
   };
 
+  const groupedResultsByLocation = () => results.reduce((acc, restaurant) => {
+    const locationId = restaurant.locationId || 'Unknown';
+    if (!acc[locationId]) acc[locationId] = [];
+    acc[locationId].push(restaurant);
+    return acc;
+  }, {} as Record<string, Restaurant[]>);
+
   const handleClearFilters = () => {
     setSearchTerm('');
     setSortOption('');
@@ -52,9 +66,7 @@ const SearchRestaurants: React.FC<SearchRestaurantsProps> = ({ initialRestaurant
   return (
     <>
       <Container fluid className="my-4">
-        {/* Centered Search Controls */}
         <Row className="justify-content-center mb-3 align-items-center">
-          {/* Search Input (Longer) */}
           <Col xs={6} md={4} className="text-start">
             <Form.Control
               type="text"
@@ -63,47 +75,59 @@ const SearchRestaurants: React.FC<SearchRestaurantsProps> = ({ initialRestaurant
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </Col>
-          {/* Sort Dropdown */}
           <Col xs={6} md={2} className="text-center">
-            <Form.Select
-              value={sortOption}
-              onChange={(e) => setSortOption(e.target.value)}
-            >
+            <Form.Select value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
               <option value="">Sort By</option>
               <option value="location-asc">Location ID (Ascending)</option>
               <option value="name-asc">Name (A-Z)</option>
               <option value="name-desc">Name (Z-A)</option>
             </Form.Select>
           </Col>
-          {/* Search Button */}
           <Col xs={6} md={2} lg={1} className="text-center">
             <Button variant="primary" onClick={handleSearch}>
               Search
             </Button>
           </Col>
-          {/* Clear Filters Button */}
           <Col xs="auto" className="text-center">
-            <Button
-              variant="secondary"
-              onClick={handleClearFilters}
-            >
+            <Button variant="secondary" onClick={handleClearFilters}>
               Clear Filters
             </Button>
           </Col>
         </Row>
       </Container>
       {loading && <div className="text-center">Loading...</div>}
-      <Row xs={1} md={3} className="g-4">
-        {results.length > 0 ? (
-          results.map((restaurant) => (
-            <Col key={restaurant.id}>
-              <RestaurantCard restaurant={restaurant} />
-            </Col>
-          ))
-        ) : (
-          !loading && <div className="text-center">No restaurants found</div>
-        )}
-      </Row>
+      {sortOption === 'location-asc' ? (
+        <Container>
+          {Object.entries(groupedResultsByLocation()).map(([locationId, restaurants]) => (
+            <Container key={locationId}>
+              <h5>
+                Location:
+                {' '}
+                {locationNames[locationId] || locationId}
+              </h5>
+              <Row xs={1} md={3} className="g-4">
+                {restaurants.map((restaurant) => (
+                  <Col key={restaurant.id}>
+                    <RestaurantCard restaurant={restaurant} />
+                  </Col>
+                ))}
+              </Row>
+            </Container>
+          ))}
+        </Container>
+      ) : (
+        <Row xs={1} md={3} className="g-4">
+          {results.length > 0 ? (
+            results.map((restaurant) => (
+              <Col key={restaurant.id}>
+                <RestaurantCard restaurant={restaurant} />
+              </Col>
+            ))
+          ) : (
+            !loading && <div className="text-center">No restaurants found</div>
+          )}
+        </Row>
+      )}
     </>
   );
 };
