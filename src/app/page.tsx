@@ -1,7 +1,6 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import { prisma } from '@/lib/prisma';
 import SearchBar2 from '@/components/SearchBar2';
-import SearchBar from '@/components/SearchBar';
 
 /** Renders a list of restuarants for the directory page. */
 const ListPage = async () => {
