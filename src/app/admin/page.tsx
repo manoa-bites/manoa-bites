@@ -125,6 +125,7 @@ const AdminPage = async () => {
                 <Table striped bordered hover>
                   <thead>
                     <tr>
+                      <th>ID</th>
                       <th>Name</th>
                       <th>Actions</th>
                     </tr>
