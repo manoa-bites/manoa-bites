@@ -103,7 +103,7 @@ const SearchRestaurants: React.FC<SearchRestaurantsProps> = ({ initialRestaurant
                 {' '}
                 {locationNames[locationId] || locationId}
               </h5>
-              <Row xs={1} md={3} className="g-4">
+              <Row xs={1} md={3} className="g-4 mt-1">
                 {restaurants.map((restaurant) => (
                   <Col key={restaurant.id}>
                     <RestaurantCard restaurant={restaurant} />
@@ -114,7 +114,7 @@ const SearchRestaurants: React.FC<SearchRestaurantsProps> = ({ initialRestaurant
           ))}
         </Container>
       ) : (
-        <Row xs={1} md={3} className="g-4">
+        <Row xs={1} md={3} className="g-4 mt-1">
           {results.length > 0 ? (
             results.map((restaurant) => (
               <Col key={restaurant.id}>
