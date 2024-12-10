@@ -25,35 +25,23 @@ export default async function EditLocation({
     where: { id },
   });
 
-  const currentUserEmail = session?.user?.email as string;
-  const currentUser = await prisma.user.findUnique({
-    where: {
-      email: currentUserEmail,
-    },
-  });
-
-  const currentUserId = currentUser?.id;
-
-  const userWithRole = session?.user as { email: string; randomKey: string };
-  const role = userWithRole?.randomKey;
-
   if (!location) {
     return notFound();
   }
 
-  if (role !== 'ADMIN' && location?.id !== currentUserId) {
+  const userWithRole = session?.user as { email: string; randomKey: string };
+  const role = userWithRole?.randomKey;
+
+  if (role !== 'ADMIN') {
     return notFound();
   }
 
   return (
     <main>
-      {currentUserId ? (
-        <EditLocationForm
-          location={{ id: location.id, name: location.name }}
-        />
-      ) : (
-        <div>Not logged in</div>
-      )}
+      <EditLocationForm
+        id={location.id}
+        name={location.name}
+      />
     </main>
   );
 }
