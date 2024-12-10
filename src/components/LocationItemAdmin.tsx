@@ -1,7 +1,7 @@
 import { editLocation } from '@/lib/dbActions';
 import { EditLocationSchema } from '@/lib/validationSchemas';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Container, Row, Col, Form, Card } from 'react-bootstrap';
+import { Container, Row, Col, Form, Card, Button } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { Location } from '@prisma/client';
 
@@ -19,6 +19,10 @@ const LocationItemAdmin = ({ location }: { location: Location }) => {
     formState: { errors },
   } = useForm<Location>({
     resolver: yupResolver(EditLocationSchema),
+    defaultValues: {
+      id: location.id,
+      name: location.name,
+    },
   });
 
   return (
@@ -31,7 +35,7 @@ const LocationItemAdmin = ({ location }: { location: Location }) => {
           <Card>
             <Card.Body>
               <Form onSubmit={handleSubmit(onSubmit)}>
-                <input type="hidden" {...register('id')} value={location.id} />
+                <input type="hidden" {...register('id')} />
                 <Form.Group>
                   <Form.Label>Name</Form.Label>
                   <input
@@ -43,6 +47,9 @@ const LocationItemAdmin = ({ location }: { location: Location }) => {
                   />
                   <div className="invalid-feedback">{errors.name?.message}</div>
                 </Form.Group>
+                <Button className="btn btn-primary" type="submit">
+                  Submit
+                </Button>
               </Form>
             </Card.Body>
           </Card>
