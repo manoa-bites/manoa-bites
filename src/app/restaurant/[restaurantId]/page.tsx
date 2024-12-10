@@ -44,46 +44,46 @@ const RestaurantPage = async ({ params }: RestaurantPageProps) => {
         width="900px"
       />
       <Row>
-      <h3>{restaurant?.name}</h3>
+        <h3>{restaurant?.name}</h3>
       </Row>
       <Row>
-      <Col>
-      <h5>
-        Located at:
-        {' '}
-        {locationName}
-      </h5>
-      <h5>
-        Website:
-        {' '}
-        <a href={restaurant.website || '#'} target="_blank" rel="noopener noreferrer">
-        {restaurant?.website}
-        </a>
-      </h5>
-      <h5>
-        Phone:
-        {' '}
-        {restaurant?.phone}
-      </h5>
-      <h5>
-        Hours:
-        {' '}
-        {restaurant?.hours || 'Hours Not Available'}
-      </h5>
-      <a href={restaurant.menuLink || 'Menu Not Available'} target="_blank" rel="noopener noreferrer">
-        <h5>Menu</h5>
-      </a>
-      <a href={restaurant.onlineOrderLink || '#'} target="_blank" rel="noopener noreferrer">
-        <h5>Order Online</h5>
-      </a>
-      </Col>
-      <Col>
-      <h5>
-        Description:
-        {' '}
-        {restaurant.description || 'Description Not Available'}
-        </h5>
-      </Col>
+        <Col>
+          <h5>
+            Located at:
+            {' '}
+            {locationName}
+          </h5>
+          <h5>
+            Website:
+            {' '}
+            <a href={restaurant.website || '#'} target="_blank" rel="noopener noreferrer">
+              {restaurant?.website}
+            </a>
+          </h5>
+          <h5>
+            Phone:
+            {' '}
+            {restaurant?.phone}
+          </h5>
+          <h5>
+            Hours:
+            {' '}
+            {restaurant?.hours || 'Hours Not Available'}
+          </h5>
+          <a href={restaurant.menuLink || 'Menu Not Available'} target="_blank" rel="noopener noreferrer">
+            <h5>Menu</h5>
+          </a>
+          <a href={restaurant.onlineOrderLink || '#'} target="_blank" rel="noopener noreferrer">
+            <h5>Order Online</h5>
+          </a>
+        </Col>
+        <Col>
+          <h5>
+            Description:
+            {' '}
+            {restaurant.description || 'Description Not Available'}
+          </h5>
+        </Col>
       </Row>
     </Container>
   );
