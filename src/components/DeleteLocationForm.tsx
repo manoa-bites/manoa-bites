@@ -33,14 +33,14 @@ const DeleteLocationForm: React.FC<Props> = ({ id, name }) => {
   };
 
   return (
-    <Container className="py-3">
+    <Container className="py-4">
       <Row className="justify-content-center">
         <Col xs={5}>
           <Card>
             <Card.Body>
               <h4 className="text-center mb-3">Delete Location</h4>
               <p className="text-center">
-                Are you sure you want to delete the restaurant:
+                Are you sure you want to delete this Location:
                 <strong>{name}</strong>
                 ?
               </p>

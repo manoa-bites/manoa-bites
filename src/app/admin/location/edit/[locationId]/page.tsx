@@ -5,6 +5,7 @@ import authOptions from '@/lib/authOptions';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import { prisma } from '@/lib/prisma';
 import EditLocationForm from '@/components/EditLocationForm';
+import { Container } from 'react-bootstrap';
 
 export default async function EditLocation({
   params,
@@ -38,10 +39,12 @@ export default async function EditLocation({
 
   return (
     <main>
-      <EditLocationForm
-        id={location.id}
-        name={location.name}
-      />
+      <Container>
+        <EditLocationForm
+          id={location.id}
+          name={location.name}
+        />
+      </Container>
     </main>
   );
 }
