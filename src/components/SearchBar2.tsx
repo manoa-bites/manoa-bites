@@ -14,8 +14,7 @@ const locationNames: Record<number | string, string> = {
   1: 'Palms Food Court',
   2: 'Campus Center',
   3: 'Engineering Courtyard',
-  // Add more mappings as needed
-  Unknown: 'Unknown Location',
+  Unknown: 'Unknown Location', // Fallback for null or undefined
 };
 
 const SearchRestaurants: React.FC<SearchRestaurantsProps> = ({ initialRestaurants }) => {
@@ -33,7 +32,7 @@ const SearchRestaurants: React.FC<SearchRestaurantsProps> = ({ initialRestaurant
 
     switch (sortOption) {
       case 'location-asc':
-        filteredResults.sort((a, b) => a.locationId - b.locationId);
+        filteredResults.sort((a, b) => (a.locationId || 0) - (b.locationId || 0));
         break;
       case 'name-asc':
         filteredResults.sort((a, b) => a.name.localeCompare(b.name));
@@ -50,7 +49,7 @@ const SearchRestaurants: React.FC<SearchRestaurantsProps> = ({ initialRestaurant
   };
 
   const groupedResultsByLocation = () => results.reduce((acc, restaurant) => {
-    const locationId = restaurant.locationId || 'Unknown';
+    const locationId = restaurant.locationId ?? 'Unknown'; // Handle null or undefined
     if (!acc[locationId]) acc[locationId] = [];
     acc[locationId].push(restaurant);
     return acc;
