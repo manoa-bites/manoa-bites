@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import { editLocation } from '@/lib/dbActions';
 import { EditLocationSchema } from '@/lib/validationSchemas';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -58,4 +59,26 @@ const LocationItemAdmin = ({ location }: { location: Location }) => {
     </Container>
   );
 };
+=======
+type LocationItemProp = {
+  id: number;
+  name: string;
+};
+
+const LocationItemAdmin = ({
+  id,
+  name,
+}: LocationItemProp) => (
+  <tr>
+    <td>{id}</td>
+    <td>{name}</td>
+    <td>
+      <a href={`/admin/location/edit/${id}`}>Edit</a>
+      {' '}
+      <a href={`/admin/location/delete/${id}`}>Delete</a>
+    </td>
+  </tr>
+);
+
+>>>>>>> Stashed changes
 export default LocationItemAdmin;
