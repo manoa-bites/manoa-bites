@@ -90,6 +90,13 @@ export async function deleteRestaurant(data: { id: number }) {
   redirect('/admin');
 }
 
+export async function editLocation(data: { id: number; name: string }) {
+  await prisma.location.update({
+    where: { id: data.id },
+    data: { name: data.name },
+  });
+}
+
 export async function getRestaurantImageById(restaurantId: number) {
   const restaurant = await prisma.restaurant.findUnique({
     where: {
