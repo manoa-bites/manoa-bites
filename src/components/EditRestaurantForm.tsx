@@ -17,13 +17,25 @@ import { redirect } from 'next/navigation';
 import { editRestaurant } from '@/lib/dbActions';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { EditRestaurantSchema } from '@/lib/validationSchemas';
-import { Location, Restaurant } from '@prisma/client';
+import { Location } from '@prisma/client';
 import { useState, ChangeEvent } from 'react';
 
 type Props = {
   currentUserId: number | null;
   locations: Location[];
-  restaurant: Restaurant;
+  restaurant: {
+    id: number;
+    name: string;
+    latitude: number | null; // Updated type
+    longitude: number | null; // Updated type
+    website: string | null;
+    phone: string | null;
+    menuLink: string | null;
+    onlineOrderLink: string | null;
+    image: string | null;
+    postedById: number;
+    locationId: number | null;
+  };
 };
 
 const EditRestaurantForm: React.FC<Props> = ({
@@ -64,6 +76,7 @@ const EditRestaurantForm: React.FC<Props> = ({
     postedById: number;
     locationId?: number;
   }) => {
+    console.log('Submitted Data:', data); // Add this line
     await editRestaurant({ ...data, id: restaurant.id, image: base64 });
     swal('Success', 'Your item has been added', 'success', {
       timer: 2000,
@@ -211,7 +224,7 @@ const EditRestaurantForm: React.FC<Props> = ({
                 <Form.Group>
                   <Form.Label>Latitude</Form.Label>
                   <input
-                    type="number"
+                    // type="number"
                     {...register('latitude')}
                     className={`form-control ${errors.latitude ? 'is-invalid' : ''}`}
                     defaultValue={
@@ -225,7 +238,7 @@ const EditRestaurantForm: React.FC<Props> = ({
                 <Form.Group>
                   <Form.Label>Longitude</Form.Label>
                   <input
-                    type="number"
+                    // type="number"
                     {...register('longitude')}
                     className={`form-control ${errors.longitude ? 'is-invalid' : ''}`}
                     defaultValue={

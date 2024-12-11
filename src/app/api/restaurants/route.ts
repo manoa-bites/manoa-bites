@@ -14,8 +14,15 @@ export async function GET() {
       },
     });
 
-    console.log('Fetched Restaurants:', restaurants);
-    return NextResponse.json(restaurants, { status: 200 });
+    // Convert Decimal to number for latitude and longitude
+    const formattedRestaurants = restaurants.map((restaurant) => ({
+      ...restaurant,
+      latitude: restaurant.latitude ? Number(restaurant.latitude) : null,
+      longitude: restaurant.longitude ? Number(restaurant.longitude) : null,
+    }));
+
+    console.log('Fetched Restaurants:', formattedRestaurants);
+    return NextResponse.json(formattedRestaurants, { status: 200 });
   } catch (error) {
     console.error('Error fetching restaurants:', error);
     return NextResponse.json({ error: 'Failed to fetch restaurants' }, { status: 500 });
