@@ -82,7 +82,7 @@ const EditRestaurantForm: React.FC<Props> = ({
   }) => {
     console.log('Submitted Data:', data); // Add this line
     await editRestaurant({ ...data, id: restaurant.id, image: base64 });
-    swal('Success', 'Your item has been added', 'success', {
+    swal('Success', 'Your restaurant has been updated!', 'success', {
       timer: 2000,
     });
   };

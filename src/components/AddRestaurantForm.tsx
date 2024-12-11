@@ -75,7 +75,7 @@ const AddRestaurantForm: React.FC<Props> = ({ currentUserId, locations }) => {
     locationId?: number;
   }) => {
     await addRestaurant({ ...data, image: base64 });
-    swal('Success', 'Your item has been added', 'success', {
+    swal('Success', 'Your restaurant has been added', 'success', {
       timer: 2000,
     });
   };
