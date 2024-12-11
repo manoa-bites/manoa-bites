@@ -17,13 +17,18 @@ const ListPage = async () => {
 
   const restaurants: RestaurantWithLocationName[] = await Promise.all(
     fetchedRestaurants.map(async (res) => {
-      const location = await prisma.location.findUnique({
-        where: { id: res.id },
-      });
+      let name = null;
+
+      if (res.locationId) {
+        const location = await prisma.location.findUnique({
+          where: { id: res.locationId },
+        });
+        name = location?.name;
+      }
 
       return {
         ...res,
-        locationName: location?.name || null,
+        locationName: name || null,
       };
     }),
   );
