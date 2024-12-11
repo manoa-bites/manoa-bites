@@ -1,7 +1,7 @@
 type RestaurantItemProp = {
   name: string;
   location: string;
-  postedby: string;
+  postedby: string | null | undefined;
   id: number;
 };
 
