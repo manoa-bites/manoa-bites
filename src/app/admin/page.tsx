@@ -68,7 +68,7 @@ const AdminPage = async () => {
     return ret;
   };
 
-  const restaurants: Restaurant[] = await getRestaurants();
+  const restaurants: RestaurantWithPostedBy[] = await getRestaurants();
   const locations: Location[] = await getLocations();
   const issues = await prisma.issue.findMany();
 
@@ -117,7 +117,7 @@ const AdminPage = async () => {
                       name={restaurant.name}
                       location={location}
                       id={restaurant.id}
-                      postedby={currentUserEmail}
+                      postedby={restaurant.postedByEmail}
                     />
                   );
                 })}
