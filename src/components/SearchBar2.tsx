@@ -5,8 +5,12 @@ import { Form, Button, Container, Col, Row } from 'react-bootstrap';
 import { Restaurant } from '@prisma/client';
 import RestaurantCard from './RestaurantCard';
 
+type RestaurantWithLocationName = Restaurant & {
+  locationName:string | null
+};
+
 type SearchRestaurantsProps = {
-  initialRestaurants: Restaurant[];
+  initialRestaurants: RestaurantWithLocationName[];
 };
 
 // Mapping of location IDs to location names
@@ -53,7 +57,7 @@ const SearchRestaurants: React.FC<SearchRestaurantsProps> = ({ initialRestaurant
     if (!acc[locationId]) acc[locationId] = [];
     acc[locationId].push(restaurant);
     return acc;
-  }, {} as Record<string, Restaurant[]>);
+  }, {} as Record<string, RestaurantWithLocationName[]>);
 
   const handleClearFilters = () => {
     setSearchTerm('');

@@ -13,7 +13,11 @@ import {
 import { useEffect, useState } from 'react';
 import LoadingSpinner from './LoadingSpinner';
 
-const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
+type RestaurantWithLocationName = Restaurant & {
+  locationName:string | null
+};
+
+const RestaurantCard = ({ restaurant }: { restaurant: RestaurantWithLocationName }) => {
   const { data: session } = useSession();
   const currentUserEmail = session?.user?.email as string;
 
@@ -126,6 +130,11 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
                 />
               </main>
             ) : null}
+            <ListGroup.Item>
+              Located At:
+              {' '}
+              {restaurant.locationName || 'Not Available'}
+            </ListGroup.Item>
             <ListGroup.Item>
               Phone:
               {' '}
