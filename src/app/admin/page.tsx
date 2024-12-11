@@ -9,6 +9,10 @@ import LocationItemAdmin from '@/components/LocationItemAdmin';
 import { PlusCircleFill } from 'react-bootstrap-icons';
 import IssueCard from '@/components/IssueCard';
 
+type RestaurantWithPostedBy = Restaurant & {
+  postedByEmail: string | null | undefined;
+};
+
 const AdminPage = async () => {
   const session = await getServerSession(authOptions);
   // const { data: session } = useSession();
@@ -30,7 +34,7 @@ const AdminPage = async () => {
 
   const users = await prisma.user.findMany({});
 
-  const getRestaurants = async (): Promise<Restaurant[]> => {
+  const getRestaurants = async (): Promise<RestaurantWithPostedBy[]> => {
     let ret: Restaurant[] = [];
     if (role === 'ADMIN') {
       ret = await prisma.restaurant.findMany({});
@@ -42,7 +46,21 @@ const AdminPage = async () => {
         },
       });
     }
-    return ret;
+
+    const restaurantsWithPostedByEmail: RestaurantWithPostedBy[] = await Promise.all(
+      ret.map(async (res) => {
+        const user = await prisma.user.findUnique({
+          where: { id: res.id },
+        });
+
+        return {
+          ...res,
+          postedByEmail: user?.email,
+        };
+      }),
+    );
+
+    return restaurantsWithPostedByEmail;
   };
 
   const getLocations = async (): Promise<Location[]> => {
@@ -53,6 +71,7 @@ const AdminPage = async () => {
   const restaurants: Restaurant[] = await getRestaurants();
   const locations: Location[] = await getLocations();
   const issues = await prisma.issue.findMany();
+
   return (
     <main>
       <Container id="list" className="py-3">
@@ -65,7 +84,6 @@ const AdminPage = async () => {
               href="/admin/restaurant/add"
             >
               Add Restaurant
-              {' '}
               <PlusCircleFill />
             </Button>
             <Table striped bordered hover>
@@ -119,7 +137,6 @@ const AdminPage = async () => {
                   href="/admin/location/add"
                 >
                   Add Location
-                  {' '}
                   <PlusCircleFill />
                 </Button>
                 <Table striped bordered hover>
@@ -132,7 +149,11 @@ const AdminPage = async () => {
                   </thead>
                   <tbody>
                     {locations.map(async (location) => (
-                      <LocationItemAdmin key={location.id} id={location.id} name={location.name} />
+                      <LocationItemAdmin
+                        key={location.id}
+                        id={location.id}
+                        name={location.name}
+                      />
                     ))}
                   </tbody>
                 </Table>
