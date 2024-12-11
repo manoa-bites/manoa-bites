@@ -1,10 +1,18 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import { prisma } from '@/lib/prisma';
-import SearchBar2 from '@/components/SearchBar2';
+import dynamic from 'next/dynamic';
 
-/** Renders a list of restuarants for the directory page. */
+const SearchBar2 = dynamic(() => import('@/components/SearchBar2'), { ssr: false });
+
+/** Renders a list of restaurants for the directory page. */
 const ListPage = async () => {
-  const restaurants = await prisma.restaurant.findMany();
+  let restaurants = [];
+  try {
+    restaurants = await prisma.restaurant.findMany();
+  } catch (error) {
+    console.error("Failed to fetch restaurants:", error);
+  }
+
   return (
     <main>
       <Container id="list" className="py-3">
@@ -13,9 +21,17 @@ const ListPage = async () => {
             <h1 className="text-center">Restaurants at Manoa</h1>
           </Col>
         </Row>
-        <Row>
-          <SearchBar2 initialRestaurants={restaurants} />
-        </Row>
+        {restaurants.length > 0 ? (
+          <Row>
+            <SearchBar2 initialRestaurants={restaurants} />
+          </Row>
+        ) : (
+          <Row>
+            <Col>
+              <p className="text-center">No restaurants found.</p>
+            </Col>
+          </Row>
+        )}
       </Container>
     </main>
   );

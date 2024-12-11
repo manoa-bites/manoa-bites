@@ -1,54 +1,13 @@
-'use client';
-
-import { useSession } from 'next-auth/react';
-import {
-  Button,
-  Card,
-  Col,
-  Container,
-  Form,
-  FormGroup,
-  Row,
-} from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import swal from 'sweetalert';
-import { redirect } from 'next/navigation';
-import { addRestaurant } from '@/lib/dbActions';
-import LoadingSpinner from '@/components/LoadingSpinner';
-import { AddRestaurantSchema } from '@/lib/validationSchemas';
-import { Location } from '@prisma/client';
-import { useState, ChangeEvent } from 'react';
+import { AddRestaurantSchema } from "@/lib/validationSchemas";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useState, ChangeEvent } from "react";
+import { Container, Row, Col, Card, Form, FormGroup, Button } from "react-bootstrap";
+import { useForm } from "react-hook-form";
 
 type Props = {
   currentUserId: number | null;
   locations: Location[];
-};
-
-const AddRestaurantForm: React.FC<Props> = ({ currentUserId, locations }) => {
-  const [base64, setBase64] = useState<string>('');
-
-  const session = useSession();
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(AddRestaurantSchema),
-  });
-  if (session.status === 'loading') {
-    return <LoadingSpinner />;
-  }
-  if (session.status === 'unauthenticated') {
-    redirect('/auth/signin');
-  }
-
-  if (!currentUserId) {
-    redirect('/');
-  }
-
-  const onSubmit = async (data: {
+  onAddRestaurant: (newRestaurant: {
     name: string;
     website?: string;
     phone?: string;
@@ -60,12 +19,31 @@ const AddRestaurantForm: React.FC<Props> = ({ currentUserId, locations }) => {
     longitude?: number;
     postedById: number;
     locationId?: number;
-  }) => {
-    await addRestaurant({ ...data, image: base64 });
-    swal('Success', 'Your item has been added', 'success', {
-      timer: 2000,
-    });
-  };
+    image?: string;
+  }) => void;
+};
+
+type Location = {
+  id: number;
+  name: string;
+  // Add any other fields as necessary
+};
+
+const AddRestaurantForm: React.FC<Props> = ({
+  currentUserId,
+  locations,
+  onAddRestaurant,
+}) => {
+  const [base64, setBase64] = useState<string>('');
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(AddRestaurantSchema),
+  });
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -79,6 +57,31 @@ const AddRestaurantForm: React.FC<Props> = ({ currentUserId, locations }) => {
 
       reader.readAsDataURL(file);
     }
+  };
+
+  const onSubmit = (data: {
+    name: string;
+    website?: string;
+    phone?: string;
+    hours?: string;
+    description?: string;
+    menuLink?: string;
+    onlineOrderLink?: string;
+    latitude?: number;
+    longitude?: number;
+    locationId?: number;
+  }) => {
+    const newRestaurant = {
+      ...data,
+      postedById: currentUserId!,
+      image: base64,
+    };
+
+    onAddRestaurant(newRestaurant);
+    swal('Success', 'Your restaurant has been added', 'success', {
+      timer: 2000,
+    });
+    reset();
   };
 
   return (
@@ -95,7 +98,7 @@ const AddRestaurantForm: React.FC<Props> = ({ currentUserId, locations }) => {
                   <input
                     type="hidden"
                     {...register('postedById')}
-                    value={currentUserId}
+                    value={currentUserId ?? ''}
                   />
                 </FormGroup>
                 <Form.Group>
