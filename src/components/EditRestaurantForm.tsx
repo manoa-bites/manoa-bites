@@ -30,6 +30,8 @@ type Props = {
     longitude: number | null; // Updated type
     website: string | null;
     phone: string | null;
+    hours: string | null;
+    description: string | null;
     menuLink: string | null;
     onlineOrderLink: string | null;
     image: string | null;
@@ -203,8 +205,9 @@ const EditRestaurantForm: React.FC<Props> = ({
                   <Form.Label>Hours</Form.Label>
                   <input
                     type="text"
-                    {...register('hours')}
+                    {...register('phone')}
                     className={`form-control ${errors.hours ? 'is-invalid' : ''}`}
+                    defaultValue={restaurant.hours || ''}
                   />
                   <div className="invalid-feedback">
                     {errors.hours?.message}
@@ -213,9 +216,9 @@ const EditRestaurantForm: React.FC<Props> = ({
                 <Form.Group>
                   <Form.Label>Description</Form.Label>
                   <input
-                    type="text"
                     {...register('description')}
                     className={`form-control ${errors.description ? 'is-invalid' : ''}`}
+                    defaultValue={restaurant.description || ''}
                   />
                   <div className="invalid-feedback">
                     {errors.description?.message}
