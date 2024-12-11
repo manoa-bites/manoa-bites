@@ -112,7 +112,7 @@ const AdminPage = async () => {
           <main>
             <Row>
               <Col>
-                <h1>{`List Restaurants ${role}`}</h1>
+                <h1>{`List Locations ${role}`}</h1>
                 <Button
                   variant="success"
                   className="mb-3"
