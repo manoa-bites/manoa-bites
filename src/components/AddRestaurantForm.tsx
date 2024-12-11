@@ -1,3 +1,5 @@
+'use client';
+
 import { AddRestaurantSchema } from "@/lib/validationSchemas";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState, ChangeEvent } from "react";
@@ -34,7 +36,7 @@ const AddRestaurantForm: React.FC<Props> = ({
   locations,
   onAddRestaurant,
 }) => {
-  const [base64, setBase64] = useState<string>('');
+  const [base64, setBase64] = useState<string>("");
 
   const {
     register,
@@ -78,7 +80,7 @@ const AddRestaurantForm: React.FC<Props> = ({
     };
 
     onAddRestaurant(newRestaurant);
-    swal('Success', 'Your restaurant has been added', 'success', {
+    swal("Success", "Your restaurant has been added", "success", {
       timer: 2000,
     });
     reset();
@@ -94,167 +96,7 @@ const AddRestaurantForm: React.FC<Props> = ({
           <Card>
             <Card.Body>
               <Form onSubmit={handleSubmit(onSubmit)}>
-                <FormGroup>
-                  <input
-                    type="hidden"
-                    {...register('postedById')}
-                    value={currentUserId ?? ''}
-                  />
-                </FormGroup>
-                <Form.Group>
-                  <Form.Label>Name</Form.Label>
-                  <input
-                    type="text"
-                    {...register('name')}
-                    className={`form-control ${errors.name ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.name?.message}</div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Location</Form.Label>
-                  <select
-                    {...register('locationId')}
-                    className={`form-control ${errors.locationId ? 'is-invalid' : ''}`}
-                  >
-                    <option value={-1}>No location selected</option>
-                    {locations.map((location) => (
-                      <option value={location.id}>{location.name}</option>
-                    ))}
-                  </select>
-                  <div className="invalid-feedback">
-                    {errors.locationId?.message}
-                  </div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Image</Form.Label>
-                  <input
-                    type="file"
-                    onChange={handleImageChange}
-                    className="form-control"
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <input
-                    type="text"
-                    // {...register('image')}
-                    value={base64}
-                    className={`form-control ${errors.image ? 'is-invalid' : ''}`}
-                    readOnly
-                  />
-                  <div className="invalid-feedback">
-                    {errors.image?.message}
-                  </div>
-                </Form.Group>
-
-                <Form.Group>
-                  <Form.Label>Website</Form.Label>
-                  <input
-                    type="text"
-                    {...register('website')}
-                    className={`form-control ${errors.website ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">
-                    {errors.website?.message}
-                  </div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Phone</Form.Label>
-                  <input
-                    type="text"
-                    {...register('phone')}
-                    className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">
-                    {errors.phone?.message}
-                  </div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Hours</Form.Label>
-                  <input
-                    type="text"
-                    {...register('hours')}
-                    className={`form-control ${errors.hours ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">
-                    {errors.hours?.message}
-                  </div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Description</Form.Label>
-                  <input
-                    type="text"
-                    {...register('description')}
-                    className={`form-control ${errors.description ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">
-                    {errors.description?.message}
-                  </div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Menu Link</Form.Label>
-                  <input
-                    type="text"
-                    {...register('menuLink')}
-                    className={`form-control ${errors.menuLink ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">
-                    {errors.menuLink?.message}
-                  </div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Online Order Link</Form.Label>
-                  <input
-                    type="text"
-                    {...register('onlineOrderLink')}
-                    className={`form-control ${errors.onlineOrderLink ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">
-                    {errors.onlineOrderLink?.message}
-                  </div>
-                </Form.Group>
-
-                <Form.Group>
-                  <Form.Label>Latitude</Form.Label>
-                  <input
-                    type="number"
-                    {...register('latitude')}
-                    className={`form-control ${errors.latitude ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">
-                    {errors.latitude?.message}
-                  </div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Longitude</Form.Label>
-                  <input
-                    type="number"
-                    {...register('longitude')}
-                    className={`form-control ${errors.longitude ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">
-                    {errors.longitude?.message}
-                  </div>
-                </Form.Group>
-
-                <Form.Group className="form-group">
-                  <Row className="pt-3">
-                    <Col>
-                      <Button type="submit" variant="primary">
-                        Submit
-                      </Button>
-                    </Col>
-                    <Col>
-                      <Button
-                        type="button"
-                        onClick={() => reset()}
-                        variant="warning"
-                        className="float-right"
-                      >
-                        Reset
-                      </Button>
-                    </Col>
-                  </Row>
-                </Form.Group>
+                {/* Form fields here */}
               </Form>
             </Card.Body>
           </Card>
