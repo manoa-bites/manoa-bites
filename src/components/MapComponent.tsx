@@ -11,7 +11,7 @@ type Location = {
 };
 
 function Map(): ReactElement {
-  const center = useMemo(() => ({ lat:21.29865113996328, lng: -157.8170814659863 }), []);
+  const center = useMemo(() => ({ lat: 21.29865113996328, lng: -157.8170814659863 }), []);
   const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
   const [locations, setLocations] = useState<Location[]>([]);
 
