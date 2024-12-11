@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState, useEffect, ReactElement } from 'react';
+import { useMemo, useState, useEffect, ReactElement, useRef } from 'react';
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 
 type Location = {
@@ -14,6 +14,7 @@ function Map(): ReactElement {
   const center = useMemo(() => ({ lat: 21.29865113996328, lng: -157.8170814659863 }), []);
   const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
   const [locations, setLocations] = useState<Location[]>([]);
+  const [selectedRestaurantId, setSelectedRestaurantId] = useState<number | null>(null);
 
   // Fetch data from the API on component mount
   useEffect(() => {
@@ -36,39 +37,70 @@ function Map(): ReactElement {
     fetchLocations();
   }, []);
 
-  return (
-    <GoogleMap zoom={17} center={center} mapContainerClassName="map-container">
-      {locations.map((location) => (
-        <Marker
-          key={location.id}
-          position={{ lat: location.lat, lng: location.lng }}
-          onClick={() => setSelectedLocation(location)}
-          icon={{
-            url: '/redLocationIcon2.png',
-            scaledSize: new window.google.maps.Size(40, 40),
-            labelOrigin: new google.maps.Point(20, 50), // Horizontally centered, vertically just below the icon
-          }}
-          label={{
-            text: location.name,
-            color: 'black',
-            fontSize: '12px',
-            fontWeight: 'bold',
-          }}
-        />
-      ))}
+  // Handle the dropdown selection
+  const handleRestaurantSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const restaurantId = parseInt(event.target.value, 10);
+    setSelectedRestaurantId(restaurantId);
 
-      {selectedLocation && (
-        <InfoWindow
-          position={{ lat: selectedLocation.lat, lng: selectedLocation.lng }}
-          onCloseClick={() => setSelectedLocation(null)}
-          options={{ pixelOffset: new window.google.maps.Size(0, -30) }} // Moves the InfoWindow up by 30 pixels
+    // Find the selected location and set it as the selected location
+    const location = locations.find((loc) => loc.id === restaurantId);
+    if (location) {
+      setSelectedLocation(location);
+    }
+  };
+
+  return (
+    <div>
+      {/* Dropdown for restaurant selection */}
+      <div className="dropdown m-3">
+        <select
+          value={selectedRestaurantId ?? ''}
+          onChange={handleRestaurantSelect}
+          className="form-control"
         >
-          <div>
-            <h2>{selectedLocation.name}</h2>
-          </div>
-        </InfoWindow>
-      )}
-    </GoogleMap>
+          <option value="">Select a restaurant</option>
+          {locations.map((location) => (
+            <option key={location.id} value={location.id}>
+              {location.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Google Map */}
+      <GoogleMap zoom={17} center={selectedLocation ? { lat: selectedLocation.lat, lng: selectedLocation.lng } : center} mapContainerClassName="map-container">
+        {locations.map((location) => (
+          <Marker
+            key={location.id}
+            position={{ lat: location.lat, lng: location.lng }}
+            onClick={() => setSelectedLocation(location)}
+            icon={{
+              url: '/redLocationIcon2.png',
+              scaledSize: new window.google.maps.Size(40, 40),
+              labelOrigin: new google.maps.Point(20, 50), // Horizontally centered, vertically just below the icon
+            }}
+            label={{
+              text: location.name,
+              color: 'black',
+              fontSize: '12px',
+              fontWeight: 'bold',
+            }}
+          />
+        ))}
+
+        {selectedLocation && (
+          <InfoWindow
+            position={{ lat: selectedLocation.lat, lng: selectedLocation.lng }}
+            onCloseClick={() => setSelectedLocation(null)}
+            options={{ pixelOffset: new window.google.maps.Size(0, -30) }} // Moves the InfoWindow up by 30 pixels
+          >
+            <div>
+              <h4>{selectedLocation.name}</h4>
+            </div>
+          </InfoWindow>
+        )}
+      </GoogleMap>
+    </div>
   );
 }
 
