@@ -40,6 +40,10 @@ const Home = () => (
         or any additional feedback through our
         {' '}
         <a href="https://forms.gle/BzFbBFjH5P7m48dK6">google form</a>
+        {' '}
+        or our link in the footer called
+        {' '}
+        <a href="/issueform">&quot;Report a Problem&quot;</a>
         .
       </p>
     </Container>
