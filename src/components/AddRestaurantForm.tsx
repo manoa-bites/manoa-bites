@@ -23,6 +23,19 @@ import { useState, ChangeEvent } from 'react';
 type Props = {
   currentUserId: number | null;
   locations: Location[];
+  restaurant: {
+    id: number;
+    name: string;
+    latitude: number | null; // Updated to match the backend
+    longitude: number | null; // Updated to match the backend
+    website: string | null;
+    phone: string | null;
+    menuLink: string | null;
+    onlineOrderLink: string | null;
+    image: string | null;
+    postedById: number;
+    locationId: number | null;
+  };
 };
 
 const AddRestaurantForm: React.FC<Props> = ({ currentUserId, locations }) => {
@@ -214,6 +227,7 @@ const AddRestaurantForm: React.FC<Props> = ({ currentUserId, locations }) => {
                   <Form.Label>Latitude</Form.Label>
                   <input
                     type="number"
+                    step="any" // Removes step-based restrictions
                     {...register('latitude')}
                     className={`form-control ${errors.latitude ? 'is-invalid' : ''}`}
                   />
@@ -225,6 +239,7 @@ const AddRestaurantForm: React.FC<Props> = ({ currentUserId, locations }) => {
                   <Form.Label>Longitude</Form.Label>
                   <input
                     type="number"
+                    step="any" // Removes step-based restrictions
                     {...register('longitude')}
                     className={`form-control ${errors.longitude ? 'is-invalid' : ''}`}
                   />

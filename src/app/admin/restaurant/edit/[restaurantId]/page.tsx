@@ -16,17 +16,28 @@ export default async function EditRestaurant({
   loggedInProtectedPage(
     session as {
       user: { email: string; id: string; randomKey: string };
-      // eslint-disable-next-line @typescript-eslint/comma-dangle
     } | null,
   );
+
   const id = Number(params.restaurantId);
   console.log(id);
+
   const restaurant: Restaurant | null = await prisma.restaurant.findUnique({
     where: { id },
   });
 
-  const locations = await prisma.location.findMany({});
+  if (!restaurant) {
+    return notFound();
+  }
 
+  // Convert Decimal to Number for latitude and longitude
+  const formattedRestaurant = {
+    ...restaurant,
+    latitude: restaurant.latitude ? Number(restaurant.latitude) : null,
+    longitude: restaurant.longitude ? Number(restaurant.longitude) : null,
+  };
+
+  const locations = await prisma.location.findMany({});
   const currentUserEmail = session?.user?.email as string;
   const currentUser = await prisma.user.findUnique({
     where: {
@@ -38,9 +49,6 @@ export default async function EditRestaurant({
   const userWithRole = session?.user as { email: string; randomKey: string };
   const role = userWithRole?.randomKey;
 
-  if (!restaurant) {
-    return notFound();
-  }
   if (role !== 'ADMIN' && restaurant.postedById !== currentUserId) {
     return notFound();
   }
@@ -50,7 +58,7 @@ export default async function EditRestaurant({
       {currentUserId ? (
         <main>
           <EditRestaurantForm
-            restaurant={{ ...restaurant }}
+            restaurant={formattedRestaurant} // Pass the updated object
             locations={locations}
             currentUserId={currentUserId}
           />
