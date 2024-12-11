@@ -15,9 +15,12 @@ type SearchRestaurantsProps = {
 
 // Mapping of location IDs to location names
 const locationNames: Record<number | string, string> = {
-  1: 'Palms Food Court',
-  2: 'Campus Center',
-  3: 'Engineering Courtyard',
+  7: 'Campus Center',
+  8: 'Palms Food Court',
+  9: 'Hemenway Hall',
+  10: 'Hale Aloha Towers',
+  11: 'Gateway House',
+  12: 'Food Truck Row',
   Unknown: 'Unknown Location', // Fallback for null or undefined
 };
 
@@ -80,7 +83,7 @@ const SearchRestaurants: React.FC<SearchRestaurantsProps> = ({ initialRestaurant
           <Col xs={6} md={2} className="text-center">
             <Form.Select value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
               <option value="">Sort By</option>
-              <option value="location-asc">Location ID (Ascending)</option>
+              <option value="location-asc">Location</option>
               <option value="name-asc">Name (A-Z)</option>
               <option value="name-desc">Name (Z-A)</option>
             </Form.Select>

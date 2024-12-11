@@ -125,8 +125,8 @@ const RestaurantCard = ({ restaurant }: { restaurant: RestaurantWithLocationName
                 <Image
                   src={`/api/restaurant/image/${restaurant.id}`}
                   alt={`${restaurant.name} image`}
+                  height="200px"
                   width="100%"
-                  height="100%"
                 />
               </main>
             ) : null}
