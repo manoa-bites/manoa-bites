@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState, useEffect, ReactElement, useRef } from 'react';
+import { useMemo, useState, useEffect, ReactElement } from 'react';
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 
 type Location = {
@@ -68,7 +68,11 @@ function Map(): ReactElement {
       </div>
 
       {/* Google Map */}
-      <GoogleMap zoom={17} center={selectedLocation ? { lat: selectedLocation.lat, lng: selectedLocation.lng } : center} mapContainerClassName="map-container">
+      <GoogleMap
+        zoom={17}
+        center={selectedLocation ? { lat: selectedLocation.lat, lng: selectedLocation.lng } : center}
+        mapContainerClassName="map-container"
+      >
         {locations.map((location) => (
           <Marker
             key={location.id}
