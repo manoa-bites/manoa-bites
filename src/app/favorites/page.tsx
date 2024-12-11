@@ -45,23 +45,20 @@ const FavoritesPage = async () => {
     return restaurants;
   };
 
-  const restaurants: Restaurant[] = await getFavoritedRestaurants();
-  const restaurants2: RestaurantWithLocationName[] = [];
+  const fetchedRestaurants: Restaurant[] = await getFavoritedRestaurants();
 
-  restaurants.forEach(async (res) => {
-    let name = null;
-    const location = await prisma.location.findUnique({
-      where: { id: res.id },
-    });
-    if (location?.name) {
-      name = location.name;
-    }
-    const restaurant: RestaurantWithLocationName = {
-      ...res,
-      locationName: name,
-    };
-    restaurants2.push(restaurant);
-  });
+  const restaurants: RestaurantWithLocationName[] = await Promise.all(
+    fetchedRestaurants.map(async (res) => {
+      const location = await prisma.location.findUnique({
+        where: { id: res.id },
+      });
+
+      return {
+        ...res,
+        locationName: location?.name || null,
+      };
+    }),
+  );
 
   return (
     <main>
@@ -69,7 +66,7 @@ const FavoritesPage = async () => {
         <h1 className="text-center">Your Favorite Restaurants</h1>
         <Row>
           <Col>
-            {restaurants2.map((restaurant) => (
+            {restaurants.map((restaurant) => (
               <Col key={restaurant.name}>
                 <RestaurantCard restaurant={restaurant} />
               </Col>

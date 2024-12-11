@@ -13,30 +13,20 @@ type RestaurantWithLocationName = Restaurant & {
 
 /** Renders a list of restaurants for the directory page. */
 const ListPage = async () => {
-  let restaurants: Restaurant[] = [];
-  const restaurants2: RestaurantWithLocationName[] = [];
+  const fetchedRestaurants = await prisma.restaurant.findMany();
 
-  try {
-    // Fetching restaurant data from the database
-    restaurants = await prisma.restaurant.findMany();
-    restaurants.forEach(async (res) => {
-      let name = null;
+  const restaurants: RestaurantWithLocationName[] = await Promise.all(
+    fetchedRestaurants.map(async (res) => {
       const location = await prisma.location.findUnique({
         where: { id: res.id },
       });
-      if (location?.name) {
-        name = location.name;
-      }
-      const restaurant: RestaurantWithLocationName = {
+
+      return {
         ...res,
-        locationName: name,
+        locationName: location?.name || null,
       };
-      restaurants2.push(restaurant);
-    });
-  } catch (error) {
-    // Logging any errors that occur during fetching
-    console.error('Failed to fetch restaurants:', error);
-  }
+    }),
+  );
 
   return (
     <main>
@@ -46,10 +36,9 @@ const ListPage = async () => {
             <h1 className="text-center">Restaurants at Manoa</h1>
           </Col>
         </Row>
-        {/* Conditional rendering based on whether restaurants were found */}
         {restaurants.length > 0 ? (
           <Row>
-            <SearchBar2 initialRestaurants={restaurants2} />
+            <SearchBar2 initialRestaurants={restaurants} />
           </Row>
         ) : (
           <Row>
