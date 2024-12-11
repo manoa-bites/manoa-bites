@@ -28,6 +28,19 @@ const AddRestaurant = async () => {
       <AddRestaurantForm
         currentUserId={currentUserId || null}
         locations={locations}
+        restaurant={{
+          id: 0,
+          name: '',
+          latitude: null,
+          longitude: null,
+          website: null,
+          phone: null,
+          menuLink: null,
+          onlineOrderLink: null,
+          image: null,
+          postedById: 0,
+          locationId: null,
+        }}
       />
     </main>
   );
