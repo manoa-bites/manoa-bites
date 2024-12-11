@@ -14,7 +14,7 @@ const ListPage = async () => {
     restaurants = await prisma.restaurant.findMany();
   } catch (error) {
     // Logging any errors that occur during fetching
-    console.error("Failed to fetch restaurants:", error);
+    console.error('Failed to fetch restaurants:', error);
   }
 
   return (
@@ -25,7 +25,6 @@ const ListPage = async () => {
             <h1 className="text-center">Restaurants at Manoa</h1>
           </Col>
         </Row>
-        
         {/* Conditional rendering based on whether restaurants were found */}
         {restaurants.length > 0 ? (
           <Row>
