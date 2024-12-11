@@ -49,13 +49,19 @@ const AdminPage = async () => {
 
     const restaurantsWithPostedByEmail: RestaurantWithPostedBy[] = await Promise.all(
       ret.map(async (res) => {
+        let email = null;
+
         const user = await prisma.user.findUnique({
-          where: { id: res.id },
+          where: { id: res.postedById },
         });
+
+        if (user?.email) {
+          email = user.email;
+        }
 
         return {
           ...res,
-          postedByEmail: user?.email,
+          postedByEmail: email || null,
         };
       }),
     );
@@ -84,6 +90,7 @@ const AdminPage = async () => {
               href="/admin/restaurant/add"
             >
               Add Restaurant
+              {' '}
               <PlusCircleFill />
             </Button>
             <Table striped bordered hover>
@@ -137,6 +144,7 @@ const AdminPage = async () => {
                   href="/admin/location/add"
                 >
                   Add Location
+                  {' '}
                   <PlusCircleFill />
                 </Button>
                 <Table striped bordered hover>
