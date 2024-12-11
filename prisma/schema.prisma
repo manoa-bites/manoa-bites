@@ -14,13 +14,6 @@ model User {
   role     Role   @default(USER)
 }
 
-model Stuff {
-  id        Int       @id @default(autoincrement())
-  name      String
-  quantity  Int
-  condition Condition
-  owner     String
-}
 
 model Location {
   id   Int    @id @default(autoincrement())
@@ -62,13 +55,6 @@ enum Role {
   USER
   ADMIN
   VENDOR
-}
-
-enum Condition {
-  excellent
-  good
-  fair
-  poor
 }
 
 enum Topic {
