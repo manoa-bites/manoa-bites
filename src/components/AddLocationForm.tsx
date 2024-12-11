@@ -29,7 +29,7 @@ const AddLocationForm: React.FC = () => {
 
   const onSubmit = async (data: { name: string }) => {
     await addLocation(data);
-    swal('Success', 'Your item has been added', 'success', {
+    swal('Success', 'Your location has been added', 'success', {
       timer: 2000,
     });
   };

@@ -54,7 +54,7 @@ const DeleteRestaurantForm: React.FC<Props> = ({
 
   const onSubmit = async () => {
     await deleteRestaurant({ id: restaurant.id });
-    swal('Success', 'Your item has been deleted', 'success', {
+    swal('Success', 'Your restaurant has been deleted', 'success', {
       timer: 2000,
     });
   };
