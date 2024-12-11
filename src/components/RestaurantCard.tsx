@@ -108,7 +108,7 @@ const RestaurantCard = ({ restaurant }: { restaurant: RestaurantWithLocationName
           <Link href={`/restaurant/${restaurant.id}`} className="link-dark">
             <Card.Title>{restaurant.name}</Card.Title>
           </Link>
-          <Card.Subtitle>
+          <Card.Subtitle className="text-truncate" style={{ maxWidth: '16rem' }}>
             <Link
               href={restaurant.website || '#'}
               target="_blank"
