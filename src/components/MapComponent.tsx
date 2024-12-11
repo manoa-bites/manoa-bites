@@ -11,7 +11,7 @@ type Location = {
 };
 
 function Map(): ReactElement {
-  const center = useMemo(() => ({ lat: 21.29980545928421, lng: -157.81515541975028 }), []);
+  const center = useMemo(() => ({ lat: 21.29865113996328, lng: -157.8170814659863 }), []);
   const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
   const [locations, setLocations] = useState<Location[]>([]);
 
@@ -37,7 +37,7 @@ function Map(): ReactElement {
   }, []);
 
   return (
-    <GoogleMap zoom={19} center={center} mapContainerClassName="map-container">
+    <GoogleMap zoom={17} center={center} mapContainerClassName="map-container">
       {locations.map((location) => (
         <Marker
           key={location.id}
