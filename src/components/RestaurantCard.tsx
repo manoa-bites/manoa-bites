@@ -113,8 +113,10 @@ const RestaurantCard = ({ restaurant }: { restaurant: RestaurantWithLocationName
               href={restaurant.website || '#'}
               target="_blank"
               rel="noopener noreferrer"
+              className="text-truncate"
+              style={{ display: 'inline-block', maxWidth: '100%' }}
             >
-              {restaurant.website}
+              {restaurant.website || 'Website Not Available'}
             </Link>
           </Card.Subtitle>
         </Card.Header>
@@ -127,34 +129,37 @@ const RestaurantCard = ({ restaurant }: { restaurant: RestaurantWithLocationName
                   alt={`${restaurant.name} image`}
                   height="200px"
                   width="100%"
+                  className="mb-2"
                 />
               </main>
             ) : null}
             <ListGroup.Item>
-              Located At:
+              <strong>Located At:</strong>
               {' '}
               {restaurant.locationName || 'Not Available'}
             </ListGroup.Item>
             <ListGroup.Item>
-              Phone:
+              <strong>Phone:</strong>
               {' '}
               {restaurant.phone || 'Not Available'}
             </ListGroup.Item>
-            <ListGroup.Item>
-              Hours:
+            <ListGroup.Item className="truncate-hours">
+              <strong>Hours: </strong>
               {' '}
               {restaurant.hours || 'Not Available'}
             </ListGroup.Item>
-            <ListGroup.Item>
-              Description:
+            <ListGroup.Item className="truncate-description" style={{ height: '12rem' }}>
+              <strong>Description:</strong>
               {' '}
               {restaurant.description || 'Not Available'}
             </ListGroup.Item>
             <ListGroup.Item>
               <Link
-                href={restaurant.menuLink || 'Menu Not Available'}
+                href={restaurant.menuLink || '#'}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="text-truncate"
+                style={{ display: 'inline-block', maxWidth: '100%' }}
               >
                 Menu
               </Link>
@@ -164,6 +169,8 @@ const RestaurantCard = ({ restaurant }: { restaurant: RestaurantWithLocationName
                 href={restaurant.onlineOrderLink || '#'}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="text-truncate"
+                style={{ display: 'inline-block', maxWidth: '100%' }}
               >
                 Order Online
               </Link>
@@ -173,14 +180,14 @@ const RestaurantCard = ({ restaurant }: { restaurant: RestaurantWithLocationName
         <Card.Footer>
           {loading && <LoadingSpinner />}
           {!loading && isFavorited && (
-            <Button variant="secondary" onClick={handleRemoveFavorite}>
-              <HeartFill />
-            </Button>
+          <Button variant="secondary" onClick={handleRemoveFavorite}>
+            <HeartFill />
+          </Button>
           )}
           {!loading && !isFavorited && (
-            <Button variant="secondary" onClick={handleAddFavorite}>
-              <Heart />
-            </Button>
+          <Button variant="secondary" onClick={handleAddFavorite}>
+            <Heart />
+          </Button>
           )}
         </Card.Footer>
       </Card>

@@ -105,11 +105,11 @@ const SearchRestaurants: React.FC<SearchRestaurantsProps> = ({ initialRestaurant
         <Container>
           {Object.entries(groupedResultsByLocation()).map(([locationId, restaurants]) => (
             <Container key={locationId}>
-              <h5>
+              <h3>
                 Location:
                 {' '}
                 {locationNames[locationId] || locationId}
-              </h5>
+              </h3>
               <Row xs={1} md={3} className="g-4 mt-1">
                 {restaurants.map((restaurant) => (
                   <Col key={restaurant.id}>
