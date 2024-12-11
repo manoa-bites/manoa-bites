@@ -8,6 +8,11 @@ import RestaurantCard from '@/components/RestaurantCard';
 // import { Restaurant } from '@prisma/client';
 
 /** Render a list of stuff for the logged in user. */
+
+type RestaurantWithLocationName = Restaurant & {
+  locationName: string | null;
+};
+
 const FavoritesPage = async () => {
   // Protect the page, only logged in users can access it.
   const session = await getServerSession(authOptions);
@@ -41,6 +46,22 @@ const FavoritesPage = async () => {
   };
 
   const restaurants: Restaurant[] = await getFavoritedRestaurants();
+  const restaurants2: RestaurantWithLocationName[] = [];
+
+  restaurants.forEach(async (res) => {
+    let name = null;
+    const location = await prisma.location.findUnique({
+      where: { id: res.id },
+    });
+    if (location?.name) {
+      name = location.name;
+    }
+    const restaurant: RestaurantWithLocationName = {
+      ...res,
+      locationName: name,
+    };
+    restaurants2.push(restaurant);
+  });
 
   return (
     <main>
@@ -48,7 +69,7 @@ const FavoritesPage = async () => {
         <h1 className="text-center">Your Favorite Restaurants</h1>
         <Row>
           <Col>
-            {restaurants.map((restaurant) => (
+            {restaurants2.map((restaurant) => (
               <Col key={restaurant.name}>
                 <RestaurantCard restaurant={restaurant} />
               </Col>
