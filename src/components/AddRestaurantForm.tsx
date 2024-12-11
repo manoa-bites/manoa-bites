@@ -1,3 +1,5 @@
+'use client';
+
 import { AddRestaurantSchema } from '@/lib/validationSchemas';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState, ChangeEvent } from 'react';

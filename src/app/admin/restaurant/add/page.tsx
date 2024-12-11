@@ -1,3 +1,5 @@
+'use client';
+
 import { getServerSession } from 'next-auth';
 import authOptions from '@/lib/authOptions';
 import { adminVendorProtectedPage } from '@/lib/page-protection';
