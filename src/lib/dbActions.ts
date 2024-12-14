@@ -276,3 +276,9 @@ export async function removeFavorite(favorites: {
 
   console.log('Favorite(s) remove successfully!');
 }
+
+export async function deleteIssue(data: { id: number }) {
+  await prisma.issue.deleteMany({
+    where: { id: data.id },
+  });
+}

@@ -61,6 +61,14 @@ export const DeleteLocationSchema = Yup.object({
   name: Yup.string().required(),
 });
 
+export const DeleteIssueSchema = Yup.object({
+  id: Yup.number().required(),
+  topic: Yup.string().required(),
+  name: Yup.string().required(),
+  contactinfo: Yup.string().optional(),
+  description: Yup.string().required(),
+});
+
 export const IssueSchema = Yup.object({
   topic: Yup.string()
     .oneOf(['bug', 'feature', 'wronginformation', 'other'])
