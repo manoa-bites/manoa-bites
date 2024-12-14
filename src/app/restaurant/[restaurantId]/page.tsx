@@ -1,3 +1,4 @@
+import IndividualMapComponent from '@/components/IndividualMapComponent';
 import { prisma } from '@/lib/prisma';
 import { Container, Image, Col, Row } from 'react-bootstrap';
 
@@ -19,9 +20,9 @@ const RestaurantPage = async ({ params }: RestaurantPageProps) => {
   // Try and fetch location name and set to locationName
   if (restaurant?.locationId) {
     const location = await prisma.location.findUnique({
-      where: { id: restaurant.id },
+      where: { id: restaurant.locationId }, // Corrected to use locationId
     });
-    locationName = location?.name;
+    locationName = location?.name; // Retrieve the name if the location exists
   }
 
   // If no restaurant, return 404 page
@@ -37,12 +38,20 @@ const RestaurantPage = async ({ params }: RestaurantPageProps) => {
   // Implement restaurant page design here.
   return (
     <Container className="py-3">
-      <Image
-        className="py-3 mx-auto d-block"
-        src={`/api/restaurant/image/${restaurant.id}`}
-        alt={`${restaurant.name} image`}
-        width="900px"
-      />
+      <Row>
+        <Col>
+          <Image
+            className="py-3 mx-auto d-block"
+            src={`/api/restaurant/image/${restaurant.id}`}
+            alt={`${restaurant.name} image`}
+            height="500px"
+          />
+        </Col>
+        <Col className="py-3 align-items-center">
+          <h3>Location</h3>
+          <IndividualMapComponent restaurant={restaurant} />
+        </Col>
+      </Row>
       <Row>
         <h3>{restaurant?.name}</h3>
       </Row>
