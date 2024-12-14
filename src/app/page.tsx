@@ -3,7 +3,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import dynamic from 'next/dynamic';
 
 const prisma = new PrismaClient();
-const SearchBar2 = dynamic(() => import('@/components/SearchBar2'), {
+const SearchBar = dynamic(() => import('@/components/SearchBar'), {
   ssr: false,
 });
 
@@ -43,7 +43,7 @@ const ListPage = async () => {
         </Row>
         {restaurants.length > 0 ? (
           <Row>
-            <SearchBar2 initialRestaurants={restaurants} />
+            <SearchBar initialRestaurants={restaurants} />
           </Row>
         ) : (
           <Row>
