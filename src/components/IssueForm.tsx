@@ -4,28 +4,32 @@ import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import swal from 'sweetalert';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation'; // Import useRouter for programmatic navigation
 import { reportIssue } from '@/lib/dbActions';
 import { IssueSchema } from '@/lib/validationSchemas';
 
-const onSubmit = async (data: { topic: string, name?: string, contactinfo?: string, description: string }) => {
-  // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
-  await reportIssue(data);
-  swal('Success', 'Your problem has been reported', 'success', {
-    timer: 5000,
-  });
-  redirect('src/app/page.tsx');
-};
-
 const IssueForm: React.FC = () => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
+  const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(IssueSchema),
   });
+
+  const router = useRouter(); // Initialize useRouter for client-side navigation
+
+  const onSubmit = async (data: { topic: string, name?: string, contactinfo?: string, description: string }) => {
+    try {
+      // Report the issue to the backend
+      await reportIssue(data);
+      swal('Success', 'Your problem has been reported', 'success', {
+        timer: 5000,
+      });
+
+      // Redirect to the home page after the success message
+      router.push('/'); // This redirects to the home page
+    } catch (error) {
+      swal('Error', 'There was an error submitting your issue', 'error');
+    }
+  };
+
   return (
     <Container className="py-3">
       <Row className="justify-content-center">
@@ -81,7 +85,7 @@ const IssueForm: React.FC = () => {
                       </Button>
                     </Col>
                     <Col>
-                      <Button type="button" onClick={() => reset()} variant="warning" className="float-right">
+                      <Button type="button" variant="warning" className="float-right">
                         Reset
                       </Button>
                     </Col>
