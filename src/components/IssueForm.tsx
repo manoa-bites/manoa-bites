@@ -4,6 +4,7 @@ import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import swal from 'sweetalert';
+import { redirect } from 'next/navigation';
 import { reportIssue } from '@/lib/dbActions';
 import { IssueSchema } from '@/lib/validationSchemas';
 
@@ -13,6 +14,7 @@ const onSubmit = async (data: { topic: string, name?: string, contactinfo?: stri
   swal('Success', 'Your problem has been reported', 'success', {
     timer: 2000,
   });
+  redirect('/');
 };
 
 const IssueForm: React.FC = () => {
