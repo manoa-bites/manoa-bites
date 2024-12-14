@@ -8,9 +8,14 @@ const IssueCard = ({ issue }: { issue : Issue }) => {
   const handleDelete = async () => {
     try {
       await deleteIssue({ id: issue.id });
-      swal('Deleted', 'Location successfully deleted', 'success', { timer: 2000 });
+      swal('Resolved', 'Issue successfully deleted', 'success', { timer: 2000 });
+
+      // Reload the page after deletion
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000); // Wait for the success message to show before reloading
     } catch (error) {
-      swal('Error', 'Failed to delete the restaurant', 'error');
+      swal('Error', 'Failed to delete the issue', 'error');
     }
   };
 
