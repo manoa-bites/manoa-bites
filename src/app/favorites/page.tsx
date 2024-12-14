@@ -65,13 +65,11 @@ const FavoritesPage = async () => {
       <Container id="list" className="py-3">
         <h1 className="text-center">Your Favorite Restaurants</h1>
         <Row xs={1} md={3} className="g-4 mt-1">
-          <Col>
-            {restaurants.map((restaurant) => (
-              <Col key={restaurant.name}>
-                <RestaurantCard restaurant={restaurant} />
-              </Col>
-            ))}
-          </Col>
+          {restaurants.map((restaurant) => (
+            <Col key={restaurant.name}>
+              <RestaurantCard restaurant={restaurant} />
+            </Col>
+          ))}
         </Row>
       </Container>
     </main>
