@@ -64,7 +64,7 @@ const FavoritesPage = async () => {
     <main>
       <Container id="list" className="py-3">
         <h1 className="text-center">Your Favorite Restaurants</h1>
-        <Row>
+        <Row xs={1} md={3} className="g-4 mt-1">
           <Col>
             {restaurants.map((restaurant) => (
               <Col key={restaurant.name}>
