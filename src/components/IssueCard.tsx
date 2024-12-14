@@ -2,19 +2,19 @@
 
 import { Issue } from '@prisma/client';
 import { Button, Card, ListGroup } from 'react-bootstrap/';
-import { useRouter } from 'next/navigation'; // Import useRouter for programmatic navigation
+import { redirect } from 'next/navigation'; // Import useRouter for programmatic navigation
 import { deleteIssue } from '@/lib/dbActions';
 
-const IssueCard = ({ issue }: { issue: Issue }) => {
-  const router = useRouter(); // Initialize useRouter for client-side navigation
+interface IssueCardProps {
+  issue: Issue;
+}
 
+const IssueCard: React.FC<IssueCardProps> = ({ issue }) => {
   const handleDelete = async () => {
     try {
       await deleteIssue({ id: issue.id });
       swal('Resolved', 'Issue successfully deleted', 'success', { timer: 2000 });
-
-      // Redirect to the admin page after successful deletion
-      router.push('/admin'); // Use router.push to navigate client-side
+      redirect('/admin'); // Redirect to admin page after deletion
     } catch (error) {
       swal('Error', 'Failed to delete the issue', 'error');
     }
