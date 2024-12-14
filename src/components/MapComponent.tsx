@@ -84,7 +84,7 @@ function Map(): ReactElement {
             <select
               value={selectedRestaurantId ?? ''}
               onChange={handleRestaurantSelect}
-              className="form-control"
+              className="form-control image-shadow"
             >
               <option value="">Select a restaurant</option>
               {locations.map((location) => (

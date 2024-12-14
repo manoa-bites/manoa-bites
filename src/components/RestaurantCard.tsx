@@ -103,7 +103,7 @@ const RestaurantCard = ({ restaurant }: { restaurant: RestaurantWithLocationName
 
   return (
     <main>
-      <Card className="h-100 mb-3">
+      <Card className="h-100 mb-3 image-shadow">
         <Card.Header>
           <Link href={`/restaurant/${restaurant.id}`} className="link-dark">
             <Card.Title>{restaurant.name}</Card.Title>
@@ -129,7 +129,7 @@ const RestaurantCard = ({ restaurant }: { restaurant: RestaurantWithLocationName
                   alt={`${restaurant.name} image`}
                   height="200px"
                   width="100%"
-                  className="mb-2"
+                  className="mb-2 image-shadow"
                 />
               </main>
             ) : null}

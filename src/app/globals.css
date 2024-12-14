@@ -57,6 +57,7 @@ body {
 .map-container {
   width: 900px;
   height: 600px;
+  box-shadow: 8px 8px 12px rgba(0, 0, 0, 0.2);
 }
 
 .truncate-one-line {
@@ -83,3 +84,7 @@ body {
   min-height: 4rem; /* Matches the height you've set inline */
 }
 
+.image-shadow {
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}

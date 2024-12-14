@@ -62,17 +62,17 @@ const RestaurantPage = async ({ params }: RestaurantPageProps) => {
             {' '}
             {locationName}
           </h5>
-          <h5>
+          <h5 className="truncate-one-line">
             Website:
             {' '}
             <a href={restaurant.website || '#'} target="_blank" rel="noopener noreferrer">
-              {restaurant?.website}
+              {restaurant?.website || 'Website Not Available'}
             </a>
           </h5>
           <h5>
             Phone:
             {' '}
-            {restaurant?.phone}
+            {restaurant?.phone || 'Phone Not Available'}
           </h5>
           <h5>
             Hours:
