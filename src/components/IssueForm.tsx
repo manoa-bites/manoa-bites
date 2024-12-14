@@ -12,9 +12,9 @@ const onSubmit = async (data: { topic: string, name?: string, contactinfo?: stri
   // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
   await reportIssue(data);
   swal('Success', 'Your problem has been reported', 'success', {
-    timer: 2000,
+    timer: 5000,
   });
-  redirect('/');
+  redirect('src/app/page.tsx');
 };
 
 const IssueForm: React.FC = () => {

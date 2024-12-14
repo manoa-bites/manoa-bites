@@ -2,24 +2,18 @@
 
 import { Issue } from '@prisma/client';
 import { Button, Card, ListGroup } from 'react-bootstrap/';
-import { useRouter } from 'next/navigation'; // Import useRouter for programmatic navigation
+import { redirect } from 'next/navigation'; // Import useRouter for programmatic navigation
 import { deleteIssue } from '@/lib/dbActions';
 
 const IssueCard = ({ issue }: { issue: Issue }) => {
-  const router = useRouter(); // Initialize the router
-
   const handleDelete = async () => {
     try {
       await deleteIssue({ id: issue.id });
       swal('Resolved', 'Issue successfully deleted', 'success', { timer: 2000 });
-
-      // Redirect to the specified callback URL (home page in this case)
-      setTimeout(() => {
-        router.push('/'); // Redirect to the homepage (or any other path)
-      }, 4000); // Wait for the success message to show before redirecting
     } catch (error) {
       swal('Error', 'Failed to delete the issue', 'error');
     }
+    redirect('src/app/page.tsx'); // Redirect back to the home page
   };
 
   return (
